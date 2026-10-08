@@ -913,13 +913,14 @@ html.theme-light .win-action-btn.win-action-close:hover {
   animation: fadeIn 0.4s ease forwards;
 }
 
-/* Maximized Window state */
+/* Maximized Window state - Seamlessly touches top system menu bar (h-8 = 32px) */
 .os-window.maximized {
-  top: 36px !important;
-  left: 8px !important;
-  width: calc(100vw - 16px) !important;
-  height: calc(100vh - 100px) !important;
-  border-radius: 12px !important;
+  top: 32px !important;
+  left: 0px !important;
+  width: 100vw !important;
+  height: calc(100vh - 32px - 72px) !important;
+  border-radius: 0 0 16px 16px !important;
+  border-top-width: 0 !important;
 }
 
 /* Mobile & Tablet Responsiveness */
