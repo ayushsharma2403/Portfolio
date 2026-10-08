@@ -1534,6 +1534,82 @@
     </div>
   </footer>
 
+  <!-- Phone Access Request & Verification Modal -->
+  <div id="phoneRequestModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
+    <div class="glass-elevated border border-white/20 w-full max-w-md rounded-2xl shadow-2xl p-6 flex flex-col gap-4 relative animate-in fade-in zoom-in-95 duration-200">
+      
+      <!-- Close Button -->
+      <button onclick="closePhoneModal()" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-white/5 hover:bg-white/15 text-on-surface-variant hover:text-white flex items-center justify-center transition-colors">
+        <span class="material-symbols-outlined text-sm">close</span>
+      </button>
+
+      <!-- Modal Header -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-tertiary/20 border border-tertiary/40 flex items-center justify-center text-tertiary">
+          <span class="material-symbols-outlined text-xl">shield_person</span>
+        </div>
+        <div>
+          <h3 class="font-display text-base font-bold text-white">Phone Access Request</h3>
+          <p class="text-[11px] text-on-surface-variant">Owner Authorization Protocol</p>
+        </div>
+      </div>
+
+      <!-- Description / Disclaimer -->
+      <div class="p-3 rounded-xl bg-surface-container/60 border border-white/10 text-xs text-on-surface-variant leading-relaxed">
+        To prevent spam and protect privacy, direct telephone access requires verified credentials. Submit your details to request an access pass directly to Ayush Sharma.
+      </div>
+
+      <!-- Request Form -->
+      <form id="phoneRequestForm" onsubmit="submitPhoneRequest(event)" class="flex flex-col gap-3">
+        <div class="flex flex-col gap-1">
+          <label class="text-[11px] font-mono text-on-surface-variant uppercase">Your Name <span class="text-tertiary">*</span></label>
+          <input type="text" id="phoneReqName" required placeholder="e.g. Sarah Connor / Recruiter" class="glass-inset px-3 py-2 rounded-lg text-xs text-white placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-tertiary border border-white/10" />
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="text-[11px] font-mono text-on-surface-variant uppercase">Work / Contact Email <span class="text-tertiary">*</span></label>
+          <input type="email" id="phoneReqEmail" required placeholder="name@company.com" class="glass-inset px-3 py-2 rounded-lg text-xs text-white placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-tertiary border border-white/10" />
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="text-[11px] font-mono text-on-surface-variant uppercase">Company / Organization / Purpose <span class="text-tertiary">*</span></label>
+          <input type="text" id="phoneReqOrg" required placeholder="e.g. Hiring for AI Engineer role at XYZ" class="glass-inset px-3 py-2 rounded-lg text-xs text-white placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-tertiary border border-white/10" />
+        </div>
+
+        <div class="flex items-center gap-2 pt-1">
+          <button type="submit" id="phoneSubmitBtn" class="flex-1 py-2.5 px-4 rounded-xl bg-tertiary text-on-tertiary font-medium text-xs flex items-center justify-center gap-2 hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-tertiary/20">
+            <span class="material-symbols-outlined text-sm">send</span>
+            <span>Request Access via Mail</span>
+          </button>
+          <button type="button" onclick="closePhoneModal()" class="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 text-white font-medium text-xs transition-colors">
+            Cancel
+          </button>
+        </div>
+      </form>
+
+      <!-- Passcode Unlock Section (When access is granted by Ayush) -->
+      <div class="border-t border-white/10 pt-3 flex flex-col gap-2">
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] font-mono text-on-surface-variant uppercase">Already granted access?</span>
+          <button type="button" onclick="togglePasscodeField()" class="text-[11px] font-mono text-primary hover:underline flex items-center gap-1">
+            <span class="material-symbols-outlined text-xs">key</span> Enter Passcode
+          </button>
+        </div>
+
+        <div id="passcodeContainer" class="hidden flex items-center gap-2">
+          <input type="password" id="phonePasscodeInput" placeholder="Enter owner passcode" class="flex-1 glass-inset px-3 py-1.5 rounded-lg text-xs text-white placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary border border-white/10 font-mono" />
+          <button type="button" onclick="verifyPhonePasscode()" class="px-3 py-1.5 rounded-lg bg-primary text-black font-semibold text-xs hover:brightness-110 transition-all">
+            Verify
+          </button>
+        </div>
+        <div id="passcodeError" class="text-[11px] text-error font-mono hidden">
+          Invalid passcode. Access Denied.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- Notification Banner Toast -->
   <div id="toastNotification" class="fixed top-12 right-6 z-50 glass-elevated border border-primary/40 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 transform translate-x-96 opacity-0 transition-all duration-300 pointer-events-none">
     <div class="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center text-primary">

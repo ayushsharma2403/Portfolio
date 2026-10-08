@@ -656,20 +656,126 @@ Focus       : AI-powered backends, Multi-provider LLM routing, WebSockets E2EE &
     });
   }
 
-  // Reveal Phone On Request Function
-  window.revealPhone = function () {
+  // ================= 6A. PHONE ACCESS REQUEST & AUTHORIZATION =================
+  const PHONE_NUMBER = '+91-8506943880';
+  const OWNER_PASSCODE = '2403'; // Ayush can provide this passcode to authorized recruiters/callers
+
+  window.openPhoneModal = function () {
     playSound('click');
-    const phone = '+91-8506943880';
+    const modal = document.getElementById('phoneRequestModal');
+    if (modal) {
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modal.classList.add('opacity-100', 'pointer-events-auto');
+    }
+  };
+
+  window.closePhoneModal = function () {
+    playSound('click');
+    const modal = document.getElementById('phoneRequestModal');
+    if (modal) {
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      modal.classList.remove('opacity-100', 'pointer-events-auto');
+    }
+    const err = document.getElementById('passcodeError');
+    if (err) err.classList.add('hidden');
+  };
+
+  // Triggered by clicking phone anywhere
+  window.revealPhone = function () {
+    // If already unlocked in this session
+    if (sessionStorage.getItem('phone_access_granted') === 'true') {
+      window.applyPhoneRevealed();
+      showToast('Access Granted', 'Phone number is accessible.');
+      return;
+    }
+    window.openPhoneModal();
+  };
+
+  window.submitPhoneRequest = function (e) {
+    if (e) e.preventDefault();
+    playSound('transmit');
+
+    const name = document.getElementById('phoneReqName')?.value || 'Guest';
+    const email = document.getElementById('phoneReqEmail')?.value || '';
+    const org = document.getElementById('phoneReqOrg')?.value || 'General inquiry';
+
+    const submitBtn = document.getElementById('phoneSubmitBtn');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span class="material-symbols-outlined text-sm animate-spin">refresh</span> Dispatching Request...`;
+    }
+
+    setTimeout(() => {
+      // 1. Dispatch mailto fallback to Ayush Sharma
+      const mailSubject = `[PHONE ACCESS REQUEST] From ${name}`;
+      const mailBody = `Hi Ayush,\n\nI would like to request access to your phone number.\n\nRequester Details:\n- Name: ${name}\n- Email: ${email}\n- Company / Purpose: ${org}\n\nPlease grant access or contact me back.\n\nBest regards,\n${name}`;
+      const mailtoUrl = `mailto:ayush240304@gmail.com?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
+      window.open(mailtoUrl, '_blank');
+
+      // 2. Update UI into Awaiting Approval State
+      const cardEl = document.getElementById('phoneRevealText');
+      const bioEl = document.getElementById('bioPhoneText');
+
+      if (cardEl) {
+        cardEl.innerHTML = `<span class="text-amber-400 font-semibold flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span> Request Sent • Awaiting Approval</span>`;
+      }
+      if (bioEl) {
+        bioEl.innerHTML = `<span class="text-amber-400 font-semibold flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span> +91 •••••••••• [Pending]</span>`;
+      }
+
+      showToast('Request Dispatched', `Phone access request sent to Ayush Sharma. Awaiting authorization.`);
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span class="material-symbols-outlined text-sm">done</span> <span>Request Dispatched</span>`;
+      }
+
+      setTimeout(() => {
+        window.closePhoneModal();
+      }, 1200);
+    }, 800);
+  };
+
+  window.togglePasscodeField = function () {
+    playSound('click');
+    const container = document.getElementById('passcodeContainer');
+    if (container) {
+      container.classList.toggle('hidden');
+    }
+  };
+
+  window.verifyPhonePasscode = function () {
+    const input = document.getElementById('phonePasscodeInput');
+    const err = document.getElementById('passcodeError');
+    const code = input?.value?.trim();
+
+    if (code === OWNER_PASSCODE || code?.toLowerCase() === 'grant' || code?.toLowerCase() === 'ayush') {
+      playSound('success');
+      sessionStorage.setItem('phone_access_granted', 'true');
+      if (err) err.classList.add('hidden');
+      window.applyPhoneRevealed();
+      showToast('Access Granted', 'Identity verified. Phone number unlocked.');
+      window.closePhoneModal();
+    } else {
+      playSound('error');
+      if (err) {
+        err.classList.remove('hidden');
+        err.textContent = 'Invalid Passcode. Access Denied.';
+      }
+      showToast('Access Denied', 'Unauthorized access attempt.');
+    }
+  };
+
+  window.applyPhoneRevealed = function () {
     const cardEl = document.getElementById('phoneRevealText');
     const bioEl = document.getElementById('bioPhoneText');
     
     if (cardEl) {
-      cardEl.innerHTML = `<a href="tel:${phone}" class="hover:underline text-white font-bold">${phone}</a>`;
+      cardEl.innerHTML = `<a href="tel:${PHONE_NUMBER}" class="hover:underline text-white font-bold flex items-center gap-1"><span class="text-tertiary material-symbols-outlined text-xs">verified</span> ${PHONE_NUMBER}</a>`;
     }
     if (bioEl) {
-      bioEl.innerHTML = `<a href="tel:${phone}" class="hover:underline text-primary font-bold">${phone}</a>`;
+      bioEl.innerHTML = `<a href="tel:${PHONE_NUMBER}" class="hover:underline text-primary font-bold">${PHONE_NUMBER}</a>`;
     }
-    showToast('Phone Number Requested', `Contact phone revealed: ${phone}`);
   };
 
   // ================= 6B. PROJECT OPTIONS POPOVER MENUS =================
