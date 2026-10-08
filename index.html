@@ -83,6 +83,7 @@
       <nav class="hidden md:flex items-center gap-1 text-[13px] font-sans">
         <button class="menu-tab-btn" onclick="openWindow('about')">Profile</button>
         <button class="menu-tab-btn" onclick="openWindow('projects')">Projects</button>
+        <button class="menu-tab-btn" onclick="openWindow('education')">Education</button>
         <button class="menu-tab-btn" onclick="openWindow('experience')">Experience</button>
         <button class="menu-tab-btn" onclick="openWindow('skills')">Skills Matrix</button>
         <button class="menu-tab-btn" onclick="openWindow('certifications')">Credentials</button>
@@ -733,6 +734,102 @@
         </div>
       </div>
 
+      <!-- ================= 5B. DEDICATED EDUCATION WINDOW ================= -->
+      <div id="win-education" class="os-window glass-elevated rounded-2xl shadow-2xl flex flex-col pointer-events-auto" data-window="education" style="width: 740px; height: 520px; top: 105px; left: 240px; z-index: 15; display: none;">
+        <div class="window-titlebar h-10 px-3.5 flex items-center justify-between border-b border-white/10 cursor-move select-none">
+          <!-- Left: Window Title & Meta -->
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm text-indigo-400">school</span>
+            <span class="font-semibold text-xs font-mono text-on-surface">Academic_Credentials.edu</span>
+            <span class="ml-2 text-[10px] font-mono px-1.5 py-0.5 rounded bg-indigo-400/10 text-indigo-300 border border-indigo-400/20">AKTU 2022–2026</span>
+          </div>
+
+          <!-- Right: Native Action Controls (Minimize, Maximize, Close) -->
+          <div class="window-controls flex items-center gap-1">
+            <button class="win-action-btn" onclick="minimizeWindow('education')" title="Minimize">
+              <span class="material-symbols-outlined text-[15px]">remove</span>
+            </button>
+            <button class="win-action-btn" onclick="maximizeWindow('education')" title="Maximize">
+              <span class="material-symbols-outlined text-[14px]">crop_square</span>
+            </button>
+            <button class="win-action-btn win-action-close" onclick="closeWindow('education')" title="Close">
+              <span class="material-symbols-outlined text-[15px]">close</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="window-body flex-1 overflow-y-auto p-6 flex flex-col gap-5 custom-scrollbar text-on-surface">
+          <div class="flex items-center justify-between border-b border-white/10 pb-3">
+            <div>
+              <h2 class="font-display text-xl font-bold text-white">Undergraduate Academic Dossier</h2>
+              <p class="text-xs text-on-surface-variant">Engineering curriculum, institutional background, and core technical foundation.</p>
+            </div>
+            <span class="badge-pill bg-indigo-400/20 text-indigo-300">Undergraduate Degree</span>
+          </div>
+
+          <!-- Primary Institution Card -->
+          <div class="glass-inset p-5 rounded-xl flex flex-col gap-3 border border-white/10 relative overflow-hidden">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/5 pb-3">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
+                  <span class="material-symbols-outlined text-3xl">school</span>
+                </div>
+                <div>
+                  <h3 class="font-display text-lg font-bold text-white">Dr. A.P.J. Abdul Kalam Technical University</h3>
+                  <div class="text-xs font-mono text-primary font-semibold">Bachelor of Technology (B.Tech)</div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 font-mono text-xs text-on-surface-variant">
+                <span class="px-2.5 py-1 rounded bg-white/5 border border-white/10 text-tertiary font-bold">June 2022 – July 2026</span>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2 pt-1 font-mono text-xs">
+              <span class="px-2.5 py-1 rounded-md bg-primary/10 text-primary border border-primary/20">Specialization: Artificial Intelligence</span>
+              <span class="px-2.5 py-1 rounded-md bg-secondary/10 text-secondary border border-secondary/20">Branch: Computer Science Engineering</span>
+              <span class="px-2.5 py-1 rounded-md bg-white/5 text-on-surface-variant border border-white/10">Location: Uttar Pradesh / New Delhi NCR</span>
+            </div>
+
+            <p class="text-xs text-on-surface-variant leading-relaxed font-sans pt-1">
+              Rigorous 4-year engineering program concentrating on algorithmic computing, machine learning theory, artificial neural networks, distributed systems, and real-world system development.
+            </p>
+          </div>
+
+          <!-- Relevant Coursework Grid -->
+          <div class="flex flex-col gap-2.5">
+            <h4 class="font-mono text-xs uppercase font-bold text-indigo-300 flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-sm">menu_book</span> Relevant Coursework &amp; Subject Mastery
+            </h4>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 font-mono text-xs">
+              <div class="p-3 rounded-lg bg-surface-container/60 border border-white/5 flex flex-col gap-1">
+                <span class="text-white font-medium">Artificial Intelligence</span>
+                <span class="text-[10px] text-on-surface-variant font-sans">Search algorithms, heuristics, multi-agent systems</span>
+              </div>
+              <div class="p-3 rounded-lg bg-surface-container/60 border border-white/5 flex flex-col gap-1">
+                <span class="text-white font-medium">Machine Learning</span>
+                <span class="text-[10px] text-on-surface-variant font-sans">Supervised/Unsupervised models, gradient descent</span>
+              </div>
+              <div class="p-3 rounded-lg bg-surface-container/60 border border-white/5 flex flex-col gap-1">
+                <span class="text-white font-medium">Data Structures &amp; Algos</span>
+                <span class="text-[10px] text-on-surface-variant font-sans">Time complexity, trees, graphs, dynamic programming</span>
+              </div>
+              <div class="p-3 rounded-lg bg-surface-container/60 border border-white/5 flex flex-col gap-1">
+                <span class="text-white font-medium">DBMS &amp; Relational SQL</span>
+                <span class="text-[10px] text-on-surface-variant font-sans">Normalization, indexing, ACID transactions</span>
+              </div>
+              <div class="p-3 rounded-lg bg-surface-container/60 border border-white/5 flex flex-col gap-1">
+                <span class="text-white font-medium">Computer Vision</span>
+                <span class="text-[10px] text-on-surface-variant font-sans">Image convolutions, facial embeddings, OpenCV</span>
+              </div>
+              <div class="p-3 rounded-lg bg-surface-container/60 border border-white/5 flex flex-col gap-1">
+                <span class="text-white font-medium">Operating Systems</span>
+                <span class="text-[10px] text-on-surface-variant font-sans">Process concurrency, memory management, POSIX</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- ================= 6. CERTIFICATIONS WINDOW ================= -->
       <div id="win-certifications" class="os-window glass-elevated rounded-2xl shadow-2xl flex flex-col pointer-events-auto" data-window="certifications" style="width: 740px; height: 520px; top: 115px; left: 260px; z-index: 13; display: none;">
         <div class="window-titlebar h-10 px-3.5 flex items-center justify-between border-b border-white/10 cursor-move select-none">
@@ -1161,7 +1258,16 @@
         <div class="dock-dot" id="dot-experience"></div>
       </button>
 
-      <!-- Dock Item 5: Certifications -->
+      <!-- Dock Item 5: Education -->
+      <button class="dock-item group" onclick="toggleWindow('education')" data-app="education" title="Education & Degree">
+        <div class="dock-icon">
+          <span class="material-symbols-outlined text-indigo-400 text-2xl group-hover:scale-110 transition-transform">school</span>
+        </div>
+        <span class="dock-label">Education</span>
+        <div class="dock-dot" id="dot-education"></div>
+      </button>
+
+      <!-- Dock Item 6: Certifications -->
       <button class="dock-item group" onclick="toggleWindow('certifications')" data-app="certifications" title="Certifications & Accreditations">
         <div class="dock-icon">
           <span class="material-symbols-outlined text-cyan-400 text-2xl group-hover:scale-110 transition-transform">verified</span>
