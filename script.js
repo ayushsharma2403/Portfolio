@@ -366,17 +366,52 @@
     const widgetClock = document.getElementById('widgetLargeClock');
     const widgetDate = document.getElementById('widgetDateString');
 
+    let is24HourFormat = true;
+
+    // Toggle 12h / 24h on click without any UI text
+    if (widgetClock) {
+      widgetClock.addEventListener('click', () => {
+        is24HourFormat = !is24HourFormat;
+        playSound('click');
+        update();
+      });
+    }
+    if (topClock) {
+      topClock.addEventListener('click', () => {
+        is24HourFormat = !is24HourFormat;
+        playSound('click');
+        update();
+      });
+    }
+
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
     function update() {
       const now = new Date();
-      const hrs = String(now.getHours()).padStart(2, '0');
-      const mins = String(now.getMinutes()).padStart(2, '0');
-      const secs = String(now.getSeconds()).padStart(2, '0');
+      const rawHrs = now.getHours();
+      const rawMins = now.getMinutes();
+      const rawSecs = now.getSeconds();
 
-      const timeStr = `${hrs}:${mins}:${secs}`;
-      if (topClock) topClock.textContent = `${hrs}:${mins} UTC`;
+      const mins = String(rawMins).padStart(2, '0');
+      const secs = String(rawSecs).padStart(2, '0');
+
+      let timeStr = '';
+      let topTimeStr = '';
+
+      if (is24HourFormat) {
+        const hrs24 = String(rawHrs).padStart(2, '0');
+        timeStr = `${hrs24}:${mins}:${secs}`;
+        topTimeStr = `${hrs24}:${mins} UTC`;
+      } else {
+        const ampm = rawHrs >= 12 ? 'PM' : 'AM';
+        const hrs12 = rawHrs % 12 || 12;
+        const displayHrs = String(hrs12).padStart(2, '0');
+        timeStr = `${displayHrs}:${mins}:${secs}`;
+        topTimeStr = `${displayHrs}:${mins} ${ampm}`;
+      }
+
+      if (topClock) topClock.textContent = topTimeStr;
       if (widgetClock) widgetClock.textContent = timeStr;
 
       if (widgetDate) {
