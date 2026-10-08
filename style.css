@@ -107,29 +107,77 @@ html.theme-light .glass-inset {
   border: 1px solid rgba(203, 213, 225, 0.8) !important;
 }
 
-html.theme-light .bg-surface-container\/60 {
-  background-color: rgba(248, 250, 252, 0.95) !important;
-  border: 1px solid rgba(203, 213, 225, 0.8) !important;
+html.theme-light .bg-surface-container\/60,
+html.theme-light .bg-surface-container\/70,
+html.theme-light .bg-surface-container\/80,
+html.theme-light .bg-surface-container\/50,
+html.theme-light .bg-surface-container {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(203, 213, 225, 0.85) !important;
   color: #0f172a !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
 }
 
 html.theme-light .border-white\/10,
-html.theme-light .border-white\/5 {
+html.theme-light .border-white\/5,
+html.theme-light .border-white\/20 {
   border-color: rgba(203, 213, 225, 0.8) !important;
 }
 
-html.theme-light .bg-white\/5 {
+html.theme-light .bg-white\/5,
+html.theme-light .bg-white\/10 {
   background-color: rgba(241, 245, 249, 0.8) !important;
-}
-
-html.theme-light .bg-surface-container {
-  background-color: rgba(248, 250, 252, 0.95) !important;
-  border: 1px solid rgba(203, 213, 225, 0.8) !important;
+  color: #0f172a !important;
 }
 
 html.theme-light .bg-surface-container-lowest {
   background-color: #ffffff !important;
   border: 1px solid rgba(203, 213, 225, 0.8) !important;
+}
+
+/* Light Mode Input & Textarea Elements */
+html.theme-light input.glass-inset,
+html.theme-light textarea.glass-inset {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(203, 213, 225, 0.9) !important;
+  color: #0f172a !important;
+}
+
+html.theme-light input.glass-inset::placeholder,
+html.theme-light textarea.glass-inset::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Light Mode Phone & Email Action Cards */
+html.theme-light #phoneRevealText {
+  color: #15803d !important;
+}
+
+html.theme-light .bg-tertiary\/20 {
+  background-color: rgba(21, 128, 61, 0.15) !important;
+  color: #15803d !important;
+}
+
+html.theme-light .bg-primary\/20,
+html.theme-light .bg-primary\/10 {
+  background-color: rgba(2, 132, 199, 0.15) !important;
+  color: #0284c7 !important;
+}
+
+html.theme-light .bg-secondary\/20,
+html.theme-light .bg-secondary\/10 {
+  background-color: rgba(79, 70, 229, 0.15) !important;
+  color: #4f46e5 !important;
+}
+
+/* Light Mode AI Agent Workflow Box */
+html.theme-light .border-primary\/20.bg-primary\/5 {
+  background-color: rgba(2, 132, 199, 0.05) !important;
+  border-color: rgba(2, 132, 199, 0.25) !important;
+}
+
+html.theme-light .text-primary-fixed {
+  color: #0369a1 !important;
 }
 
 /* Light Theme Avatar container */
