@@ -630,22 +630,22 @@ Focus       : AI-powered backends, Multi-provider LLM routing, WebSockets E2EE &
 
       if (transmitBtn) {
         transmitBtn.disabled = true;
-        transmitBtn.innerHTML = `<span class="material-symbols-outlined text-sm animate-spin">refresh</span> Transmitting...`;
+        transmitBtn.innerHTML = `<span class="material-symbols-outlined text-sm animate-spin">refresh</span> Sending...`;
       }
 
       // Simulate instantaneous encryption and mailbox routing
       setTimeout(() => {
-        showToast('Transmission Dispatched', `Payload from ${name} (${email}) encrypted & sent!`);
+        showToast('Message Sent', `Message from ${name} (${email}) sent successfully!`);
         if (status) {
-          status.innerHTML = `<span class="material-symbols-outlined text-sm text-tertiary">check_circle</span> Dispatched Successfully!`;
+          status.innerHTML = `<span class="material-symbols-outlined text-sm text-tertiary">check_circle</span> Sent Successfully!`;
         }
         if (transmitBtn) {
           transmitBtn.disabled = false;
-          transmitBtn.innerHTML = `<span>Transmitted</span> <span class="material-symbols-outlined text-sm">done</span>`;
+          transmitBtn.innerHTML = `<span>Message Sent</span> <span class="material-symbols-outlined text-sm">done</span>`;
         }
 
         // Open user's default email client with pre-filled payload as fallback
-        const mailtoUrl = `mailto:ayush240304@gmail.com?subject=Opportunity%20Inquiry%20from%20${encodeURIComponent(name)}&body=${encodeURIComponent(`From: ${name} (${email})\n\n${message}`)}`;
+        const mailtoUrl = `mailto:ayush240304@gmail.com?subject=Inquiry%20from%20${encodeURIComponent(name)}&body=${encodeURIComponent(`From: ${name} (${email})\n\n${message}`)}`;
         window.open(mailtoUrl, '_blank');
 
         setTimeout(() => {

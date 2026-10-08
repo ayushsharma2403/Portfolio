@@ -1325,17 +1325,12 @@
               <textarea id="senderMessage" required rows="4" placeholder="Write your message here..." class="glass-inset px-3 py-2 rounded-lg text-sm text-white placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary resize-none border border-white/10"></textarea>
             </div>
 
-            <div class="flex items-center justify-between pt-2">
-              <div class="text-xs font-mono text-tertiary flex items-center gap-1" id="dispatchStatus">
-                <span class="material-symbols-outlined text-sm">lock</span> E2EE Channel Ready
-              </div>
-              <div class="flex gap-2">
-                <button type="button" class="btn-ghost" onclick="closeWindow('contact')">Cancel</button>
-                <button type="submit" class="btn-primary" id="transmitBtn">
-                  <span>Transmit Payload</span>
-                  <span class="material-symbols-outlined text-sm">send</span>
-                </button>
-              </div>
+            <div class="flex items-center justify-end gap-2 pt-2">
+              <button type="button" class="btn-ghost" onclick="closeWindow('contact')">Cancel</button>
+              <button type="submit" class="btn-primary" id="transmitBtn">
+                <span>Send Message</span>
+                <span class="material-symbols-outlined text-sm">send</span>
+              </button>
             </div>
           </form>
         </div>
