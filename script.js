@@ -82,24 +82,40 @@
     }
   }
 
-  // ================= 1. WEBGL FLUID CAUSTICS SHADER =================
+  // ================= 1. WEBGL FLUID DYNAMICS & LIQUID GLASS SHADER =================
   function initShader() {
     const canvas = document.getElementById('shader-canvas');
     if (!canvas) return;
 
-    function resizeCanvas() {
-      const w = window.innerWidth || 1280;
-      const h = window.innerHeight || 720;
+    // High performance WebGL context with optimized buffer configuration
+    const gl = canvas.getContext('webgl', {
+      alpha: false,
+      depth: false,
+      stencil: false,
+      antialias: false,
+      powerPreference: 'high-performance',
+      preserveDrawingBuffer: false
+    }) || canvas.getContext('experimental-webgl');
+    if (!gl) return;
+
+    // Device Pixel Ratio capped at 1.5 for ultra-smooth 60+ FPS fluid simulation
+    function syncSize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      const w = Math.round((canvas.clientWidth || window.innerWidth || 1280) * dpr);
+      const h = Math.round((canvas.clientHeight || window.innerHeight || 720) * dpr);
       if (canvas.width !== w || canvas.height !== h) {
         canvas.width = w;
         canvas.height = h;
+        gl.viewport(0, 0, w, h);
       }
     }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
 
-    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-    if (!gl) return;
+    if (typeof ResizeObserver !== 'undefined') {
+      new ResizeObserver(syncSize).observe(canvas);
+    } else {
+      window.addEventListener('resize', syncSize);
+    }
+    syncSize();
 
     const vsSource = `
       attribute vec2 a_position;
@@ -110,6 +126,7 @@
       }
     `;
 
+    // Exact shader attached by user, with smooth u_theme (0.0 = dark, 1.0 = light) interpolation
     const fsSource = `
       precision highp float;
       uniform float u_time;
@@ -124,42 +141,42 @@
 
         float t = u_time * 0.28;
 
-        // Organic refractive fluid distortion
+        // Organic wavy fluid refraction distortion
         vec2 p = st;
-        for (int i = 1; i < 4; i++) {
-          float fi = float(i);
-          p.x += 0.32 / fi * sin(fi * 2.4 * p.y + t * 0.75 + 0.35 * fi);
-          p.y += 0.32 / fi * cos(fi * 2.4 * p.x + t * 0.55 + 0.45 * fi);
+        for(int i = 1; i < 4; i++) {
+            float fi = float(i);
+            p.x += 0.32 / fi * sin(fi * 2.4 * p.y + t * 0.75 + 0.35 * fi);
+            p.y += 0.32 / fi * cos(fi * 2.4 * p.x + t * 0.55 + 0.45 * fi);
         }
 
-        // Pointer proximity aura
+        // Dynamic mouse interaction glow / ripple
         vec2 mouseNorm = (u_mouse / u_resolution) * 2.0 - 1.0;
         mouseNorm.x *= u_resolution.x / u_resolution.y;
         float mouseDist = length(st - mouseNorm);
-        float mouseGlow = smoothstep(0.85, 0.0, mouseDist) * 0.35;
+        float mouseGlow = smoothstep(0.85, 0.0, mouseDist) * 0.28;
 
         float len = length(p);
 
-        // Dark Palette
-        vec3 darkBase = vec3(0.04, 0.06, 0.11);
-        vec3 darkVoid = vec3(0.02, 0.03, 0.06);
-        vec3 darkAzure = vec3(0.04, 0.45, 0.95);
-        vec3 darkIris = vec3(0.35, 0.18, 0.85);
-        vec3 darkCyan = vec3(0.18, 0.82, 0.65);
+        // Dark Mode Palette: deep obsidian, radiant sapphire, frosted amethyst, cyber cyan
+        vec3 darkBase = vec3(0.035, 0.05, 0.09);
+        vec3 darkVoid = vec3(0.015, 0.02, 0.04);
+        vec3 darkSapphire = vec3(0.06, 0.32, 0.78);
+        vec3 darkViolet = vec3(0.28, 0.12, 0.62);
+        vec3 darkCyan = vec3(0.0, 0.8, 0.95);
 
         vec3 darkCol = mix(darkBase, darkVoid, clamp(len * 0.45, 0.0, 1.0));
-        darkCol = mix(darkCol, darkAzure, sin(p.x * 2.0 + t) * 0.28 + 0.28);
-        darkCol = mix(darkCol, darkIris, cos(p.y * 2.0 - t) * 0.22 + 0.22);
+        darkCol = mix(darkCol, darkSapphire, sin(p.x * 2.0 + t) * 0.28 + 0.28);
+        darkCol = mix(darkCol, darkViolet, cos(p.y * 2.0 - t) * 0.22 + 0.22);
         float darkCaustics = smoothstep(0.70, 0.78, sin(p.x * 3.4 + p.y * 2.8 + t * 1.15));
-        darkCol += vec3(0.4, 0.7, 1.0) * darkCaustics * 0.35;
-        darkCol += darkCyan * mouseGlow * 0.7;
-        darkCol *= (1.0 - smoothstep(1.0, 2.5, length(st)));
+        darkCol += vec3(0.35, 0.68, 1.0) * darkCaustics * 0.32;
+        darkCol += darkCyan * mouseGlow * 0.6;
+        darkCol *= (1.0 - smoothstep(0.9, 2.3, length(st)));
 
-        // Light Palette
-        vec3 lightBase = vec3(0.93, 0.96, 0.99);
-        vec3 lightFrost = vec3(0.85, 0.91, 0.98);
-        vec3 lightAzure = vec3(0.42, 0.68, 0.98);
-        vec3 lightLilac = vec3(0.75, 0.72, 0.95);
+        // Light Mode Palette: crystalline ice, frosted pearlescent, translucent azure & soft sky tints
+        vec3 lightBase = vec3(0.92, 0.95, 0.99);
+        vec3 lightFrost = vec3(0.84, 0.90, 0.98);
+        vec3 lightAzure = vec3(0.45, 0.70, 0.96);
+        vec3 lightLilac = vec3(0.78, 0.76, 0.95);
         vec3 lightHighlight = vec3(0.99, 1.0, 1.0);
 
         vec3 lightCol = mix(lightBase, lightFrost, clamp(len * 0.4, 0.0, 1.0));
@@ -169,21 +186,22 @@
         lightCol = mix(lightCol, lightHighlight, lightCaustics * 0.45);
         lightCol += vec3(0.1, 0.45, 0.9) * mouseGlow * 0.25;
 
+        // Smooth thematic blending between Dark and Light Liquid Glass
         vec3 finalCol = mix(darkCol, lightCol, u_theme);
         gl_FragColor = vec4(finalCol, 1.0);
       }
     `;
 
-    function createShader(type, src) {
-      const shader = gl.createShader(type);
-      gl.shaderSource(shader, src);
-      gl.compileShader(shader);
-      return shader;
+    function cs(type, src) {
+      const s = gl.createShader(type);
+      gl.shaderSource(s, src);
+      gl.compileShader(s);
+      return s;
     }
 
     const prog = gl.createProgram();
-    gl.attachShader(prog, createShader(gl.VERTEX_SHADER, vsSource));
-    gl.attachShader(prog, createShader(gl.FRAGMENT_SHADER, fsSource));
+    gl.attachShader(prog, cs(gl.VERTEX_SHADER, vsSource));
+    gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fsSource));
     gl.linkProgram(prog);
     gl.useProgram(prog);
 
@@ -201,31 +219,53 @@
     const uTheme = gl.getUniformLocation(prog, 'u_theme');
 
     let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
-    window.addEventListener('mousemove', (e) => {
-      mouse.x = e.clientX;
-      mouse.y = window.innerHeight - e.clientY;
+    let targetMouse = { x: canvas.width / 2, y: canvas.height / 2 };
+
+    window.addEventListener('mousemove', (event) => {
+      const rect = canvas.getBoundingClientRect();
+      if (rect.width && rect.height) {
+        const nx = (event.clientX - rect.left) / rect.width;
+        const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+        targetMouse.x = nx * canvas.width;
+        targetMouse.y = ny * canvas.height;
+      }
 
       // Ambient cursor follower
       const glow = document.getElementById('cursorGlow');
       if (glow) {
-        glow.style.left = e.clientX + 'px';
-        glow.style.top = e.clientY + 'px';
+        glow.style.left = event.clientX + 'px';
+        glow.style.top = event.clientY + 'px';
       }
-    });
+    }, { passive: true });
 
-    let startTime = performance.now();
-    function render() {
-      const elapsed = (performance.now() - startTime) * 0.001 * (state.shaderSpeed / 0.28);
+    // Smooth thematic crossfade state
+    let currentThemeValue = state.theme === 'light' ? 1.0 : 0.0;
+    let lastTimestamp = performance.now();
+    let accumulatedTime = 0;
+
+    function render(now) {
+      const delta = Math.min((now - lastTimestamp) * 0.001, 0.1);
+      lastTimestamp = now;
+      accumulatedTime += delta * (state.shaderSpeed / 0.28);
+
+      // Smoothly interpolate theme variable (lerp)
+      const targetThemeValue = state.theme === 'light' ? 1.0 : 0.0;
+      currentThemeValue += (targetThemeValue - currentThemeValue) * Math.min(delta * 4.0, 1.0);
+
+      // Smoothly interpolate mouse position for fluid dynamics
+      mouse.x += (targetMouse.x - mouse.x) * Math.min(delta * 8.0, 1.0);
+      mouse.y += (targetMouse.y - mouse.y) * Math.min(delta * 8.0, 1.0);
+
       gl.viewport(0, 0, canvas.width, canvas.height);
-      if (uTime) gl.uniform1f(uTime, elapsed);
+      if (uTime) gl.uniform1f(uTime, accumulatedTime);
       if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
       if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
-      if (uTheme) gl.uniform1f(uTheme, state.theme === 'light' ? 1.0 : 0.0);
+      if (uTheme) gl.uniform1f(uTheme, currentThemeValue);
 
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
       requestAnimationFrame(render);
     }
-    render();
+    requestAnimationFrame(render);
   }
 
   // ================= 2. SPATIAL WINDOW MANAGER =================
