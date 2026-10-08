@@ -637,6 +637,49 @@ Focus       : AI-powered backends, Multi-provider LLM routing, WebSockets E2EE &
     showToast('Phone Number Requested', `Contact phone revealed: ${phone}`);
   };
 
+  // ================= 6B. PROJECT OPTIONS POPOVER MENUS =================
+  window.toggleProjectMenu = function (e, menuId) {
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+    playSound('click');
+
+    const targetMenu = document.getElementById(menuId);
+    const allMenus = document.querySelectorAll('.project-popover-menu');
+    
+    // Close other open project menus
+    allMenus.forEach((menu) => {
+      if (menu !== targetMenu) {
+        menu.classList.remove('show');
+      }
+    });
+
+    if (targetMenu) {
+      targetMenu.classList.toggle('show');
+    }
+  };
+
+  window.handleMistRoomDeploy = function (e) {
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+    playSound('beep');
+
+    // Close any open popover
+    document.querySelectorAll('.project-popover-menu').forEach((menu) => menu.classList.remove('show'));
+
+    showToast('Development In Progress', 'MistRoom live deployment is currently in active staging. Source code is accessible via GitHub!');
+  };
+
+  // Close project popover menus on outside clicks
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.project-popover-menu') && !e.target.closest('.project-opt-btn')) {
+      document.querySelectorAll('.project-popover-menu').forEach((menu) => menu.classList.remove('show'));
+    }
+  });
+
   // ================= 7. GLOBAL BINDINGS & KEYBOARD SHORTCUTS =================
   function initGlobalShortcuts() {
     // OS dropdown button toggle
