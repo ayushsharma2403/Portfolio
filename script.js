@@ -131,7 +131,6 @@
       precision highp float;
       uniform float u_time;
       uniform vec2 u_resolution;
-      uniform vec2 u_mouse;
       uniform float u_theme; // 0.0 = dark, 1.0 = light
 
       void main() {
@@ -149,12 +148,6 @@
             p.y += 0.32 / fi * cos(fi * 2.4 * p.x + t * 0.55 + 0.45 * fi);
         }
 
-        // Dynamic mouse interaction glow / ripple
-        vec2 mouseNorm = (u_mouse / u_resolution) * 2.0 - 1.0;
-        mouseNorm.x *= u_resolution.x / u_resolution.y;
-        float mouseDist = length(st - mouseNorm);
-        float mouseGlow = smoothstep(0.85, 0.0, mouseDist) * 0.28;
-
         float len = length(p);
 
         // Dark Mode Palette: deep obsidian, radiant sapphire, frosted amethyst, cyber cyan
@@ -162,14 +155,12 @@
         vec3 darkVoid = vec3(0.015, 0.02, 0.04);
         vec3 darkSapphire = vec3(0.06, 0.32, 0.78);
         vec3 darkViolet = vec3(0.28, 0.12, 0.62);
-        vec3 darkCyan = vec3(0.0, 0.8, 0.95);
 
         vec3 darkCol = mix(darkBase, darkVoid, clamp(len * 0.45, 0.0, 1.0));
         darkCol = mix(darkCol, darkSapphire, sin(p.x * 2.0 + t) * 0.28 + 0.28);
         darkCol = mix(darkCol, darkViolet, cos(p.y * 2.0 - t) * 0.22 + 0.22);
         float darkCaustics = smoothstep(0.70, 0.78, sin(p.x * 3.4 + p.y * 2.8 + t * 1.15));
         darkCol += vec3(0.35, 0.68, 1.0) * darkCaustics * 0.32;
-        darkCol += darkCyan * mouseGlow * 0.6;
         darkCol *= (1.0 - smoothstep(0.9, 2.3, length(st)));
 
         // Light Mode Palette: crystalline ice, frosted pearlescent, translucent azure & soft sky tints
@@ -184,7 +175,6 @@
         lightCol = mix(lightCol, lightLilac, cos(p.y * 1.8 - t * 0.8) * 0.14 + 0.14);
         float lightCaustics = smoothstep(0.68, 0.79, sin(p.x * 3.4 + p.y * 2.8 + t * 1.15));
         lightCol = mix(lightCol, lightHighlight, lightCaustics * 0.45);
-        lightCol += vec3(0.1, 0.45, 0.9) * mouseGlow * 0.25;
 
         // Smooth thematic blending between Dark and Light Liquid Glass
         vec3 finalCol = mix(darkCol, lightCol, u_theme);
@@ -221,21 +211,7 @@
 
     const uTime = gl.getUniformLocation(prog, 'u_time');
     const uRes = gl.getUniformLocation(prog, 'u_resolution');
-    const uMouse = gl.getUniformLocation(prog, 'u_mouse');
     const uTheme = gl.getUniformLocation(prog, 'u_theme');
-
-    let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
-    let targetMouse = { x: canvas.width / 2, y: canvas.height / 2 };
-
-    window.addEventListener('mousemove', (event) => {
-      const rect = canvas.getBoundingClientRect();
-      if (rect.width && rect.height) {
-        const nx = (event.clientX - rect.left) / rect.width;
-        const ny = 1.0 - (event.clientY - rect.top) / rect.height;
-        targetMouse.x = nx * canvas.width;
-        targetMouse.y = ny * canvas.height;
-      }
-    }, { passive: true });
 
     // Smooth thematic crossfade state
     let currentThemeValue = state.theme === 'light' ? 1.0 : 0.0;
@@ -251,14 +227,9 @@
       const targetThemeValue = state.theme === 'light' ? 1.0 : 0.0;
       currentThemeValue += (targetThemeValue - currentThemeValue) * Math.min(delta * 4.0, 1.0);
 
-      // Smoothly interpolate mouse position for fluid dynamics
-      mouse.x += (targetMouse.x - mouse.x) * Math.min(delta * 8.0, 1.0);
-      mouse.y += (targetMouse.y - mouse.y) * Math.min(delta * 8.0, 1.0);
-
       gl.viewport(0, 0, canvas.width, canvas.height);
       if (uTime) gl.uniform1f(uTime, accumulatedTime);
       if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
-      if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
       if (uTheme) gl.uniform1f(uTheme, currentThemeValue);
 
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
