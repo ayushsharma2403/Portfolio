@@ -27,15 +27,15 @@
   --color-outline: rgba(255, 255, 255, 0.12);
   --color-outline-bright: rgba(255, 255, 255, 0.28);
 
-  /* Glassmorphism tokens */
-  --glass-base: rgba(15, 23, 42, 0.55);
-  --glass-elevated: rgba(20, 30, 48, 0.72);
-  --glass-dock: rgba(15, 23, 42, 0.75);
-  --glass-blur: 36px;
+  /* Liquid Glass Translucent Tokens (Dark Mode) - visionOS / Frosted Glass optics */
+  --glass-base: rgba(15, 23, 42, 0.40);
+  --glass-elevated: rgba(18, 26, 44, 0.48);
+  --glass-dock: rgba(12, 18, 32, 0.55);
+  --glass-blur: 28px;
   --glass-saturate: 190%;
-  --specular-rim: linear-gradient(135deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.04) 50%, rgba(255, 255, 255, 0.15) 100%);
-  --specular-top-border: rgba(255, 255, 255, 0.35);
-  --window-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.65), 0 0 25px 2px rgba(10, 132, 255, 0.12);
+  --specular-rim: linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.04) 40%, rgba(255, 255, 255, 0.18) 100%);
+  --specular-top-border: rgba(255, 255, 255, 0.4);
+  --window-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.55), 0 0 25px 2px rgba(10, 132, 255, 0.1), inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 /* Light Mode Overrides */
@@ -55,15 +55,16 @@ body.theme-light {
   --color-primary-fixed: #0369a1;
   --color-secondary: #4f46e5;
   --color-tertiary: #15803d;
-  --color-outline: rgba(15, 23, 42, 0.15);
-  --color-outline-bright: rgba(15, 23, 42, 0.3);
+  --color-outline: rgba(15, 23, 42, 0.12);
+  --color-outline-bright: rgba(255, 255, 255, 0.6);
 
-  --glass-base: rgba(255, 255, 255, 0.85);
-  --glass-elevated: rgba(255, 255, 255, 0.94);
-  --glass-dock: rgba(255, 255, 255, 0.92);
-  --specular-rim: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.6) 100%);
-  --specular-top-border: rgba(2, 132, 199, 0.5);
-  --window-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.18), 0 0 20px 2px rgba(2, 132, 199, 0.1);
+  /* Liquid Glass Translucent Tokens (Light Mode) */
+  --glass-base: rgba(255, 255, 255, 0.45);
+  --glass-elevated: rgba(255, 255, 255, 0.52);
+  --glass-dock: rgba(255, 255, 255, 0.60);
+  --specular-rim: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.6) 100%);
+  --specular-top-border: rgba(255, 255, 255, 0.85);
+  --window-shadow: 0 24px 60px -12px rgba(15, 23, 42, 0.12), 0 0 25px 2px rgba(2, 132, 199, 0.08), inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
 }
 
 /* Specific Light Theme High-Contrast Typography & Container Enforcements */
@@ -80,31 +81,38 @@ html.theme-light .text-on-surface-variant {
 }
 
 html.theme-light .os-window {
-  background: rgba(255, 255, 255, 0.92) !important;
-  border: 1px solid rgba(148, 163, 184, 0.5) !important;
+  background: rgba(255, 255, 255, 0.50) !important;
+  backdrop-filter: blur(32px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.85) !important;
   color: #0f172a !important;
-  box-shadow: 0 24px 60px -12px rgba(15, 23, 42, 0.15), 0 0 25px 2px rgba(2, 132, 199, 0.12) !important;
+  box-shadow: 0 24px 60px -12px rgba(15, 23, 42, 0.12), 0 0 25px 2px rgba(2, 132, 199, 0.08), inset 0 1px 1px 0 rgba(255, 255, 255, 0.95) !important;
 }
 
 html.theme-light .os-window.active-window {
-  box-shadow: 0 30px 75px -12px rgba(15, 23, 42, 0.22), 0 0 30px 4px rgba(2, 132, 199, 0.2) !important;
-  border-color: rgba(2, 132, 199, 0.6) !important;
+  box-shadow: 0 30px 75px -12px rgba(15, 23, 42, 0.16), 0 0 30px 4px rgba(2, 132, 199, 0.12), inset 0 1px 1px 0 rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(255, 255, 255, 0.95) !important;
 }
 
 html.theme-light .window-titlebar {
-  background: rgba(248, 250, 252, 0.95) !important;
-  border-bottom: 1px solid rgba(203, 213, 225, 0.8) !important;
+  background: rgba(255, 255, 255, 0.38) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.65) !important;
   color: #0f172a !important;
 }
 
 html.theme-light .window-body {
-  background: rgba(255, 255, 255, 0.88) !important;
+  background: transparent !important;
   color: #0f172a !important;
 }
 
 html.theme-light .glass-inset {
-  background: rgba(241, 245, 249, 0.92) !important;
-  border: 1px solid rgba(203, 213, 225, 0.8) !important;
+  background: rgba(255, 255, 255, 0.45) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.75) !important;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.8), 0 2px 8px rgba(15, 23, 42, 0.04) !important;
 }
 
 html.theme-light .bg-surface-container\/60,
@@ -112,40 +120,46 @@ html.theme-light .bg-surface-container\/70,
 html.theme-light .bg-surface-container\/80,
 html.theme-light .bg-surface-container\/50,
 html.theme-light .bg-surface-container {
-  background-color: #ffffff !important;
-  border: 1px solid rgba(203, 213, 225, 0.85) !important;
+  background-color: rgba(255, 255, 255, 0.55) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
   color: #0f172a !important;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
 }
 
 html.theme-light .border-white\/10,
 html.theme-light .border-white\/5,
 html.theme-light .border-white\/20 {
-  border-color: rgba(203, 213, 225, 0.8) !important;
+  border-color: rgba(255, 255, 255, 0.6) !important;
 }
 
 html.theme-light .bg-white\/5,
 html.theme-light .bg-white\/10 {
-  background-color: rgba(241, 245, 249, 0.8) !important;
+  background-color: rgba(255, 255, 255, 0.4) !important;
   color: #0f172a !important;
 }
 
 html.theme-light .bg-surface-container-lowest {
-  background-color: #ffffff !important;
-  border: 1px solid rgba(203, 213, 225, 0.8) !important;
+  background-color: rgba(255, 255, 255, 0.65) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
 }
 
 /* Light Mode Input & Textarea Elements */
 html.theme-light input.glass-inset,
 html.theme-light textarea.glass-inset {
-  background-color: #ffffff !important;
-  border: 1px solid rgba(203, 213, 225, 0.9) !important;
+  background-color: rgba(255, 255, 255, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.85) !important;
   color: #0f172a !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
 }
 
 html.theme-light input.glass-inset::placeholder,
 html.theme-light textarea.glass-inset::placeholder {
-  color: #94a3b8 !important;
+  color: #64748b !important;
 }
 
 /* Light Mode Phone & Email Action Cards */
@@ -490,10 +504,11 @@ html, body {
 
 .glass-elevated {
   background: var(--glass-elevated);
-  backdrop-filter: blur(48px) saturate(200%);
-  -webkit-backdrop-filter: blur(48px) saturate(200%);
+  backdrop-filter: blur(36px) saturate(190%);
+  -webkit-backdrop-filter: blur(36px) saturate(190%);
   border: 1px solid var(--color-outline-bright);
   position: relative;
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.2), 0 20px 50px rgba(0, 0, 0, 0.5);
 }
 
 .glass-elevated::before {
@@ -509,21 +524,38 @@ html, body {
 }
 
 .glass-inset {
-  background: rgba(4, 8, 18, 0.45);
+  background: rgba(15, 23, 42, 0.35);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--color-outline);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
 }
 
-html.theme-light .glass-inset {
-  background: rgba(241, 245, 249, 0.7);
-  border: 1px solid rgba(148, 163, 184, 0.25);
+/* Translucent nested cards in dark mode so windows show underlying fluid dynamics */
+.bg-surface-container\/60,
+.bg-surface-container\/70,
+.bg-surface-container\/80,
+.bg-surface-container\/50 {
+  background: rgba(15, 23, 42, 0.38) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 4px 16px rgba(0, 0, 0, 0.25) !important;
+}
+
+.project-card,
+.cert-card {
+  background: rgba(15, 23, 42, 0.40) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12), 0 8px 24px rgba(0, 0, 0, 0.3) !important;
 }
 
 .glass-dock {
   background: var(--glass-dock);
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  backdrop-filter: blur(36px) saturate(200%);
+  -webkit-backdrop-filter: blur(36px) saturate(200%);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.25);
 }
 
@@ -985,20 +1017,24 @@ html.theme-light .win-action-btn.win-action-close:hover {
   color: #ffffff;
   transform: scale(1.05);
 }
-.project-popover-menu {
+.project-popover-menu,
+#osSystemDropdown {
   position: absolute;
+  z-index: 60;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.project-popover-menu {
   top: 100%;
   left: 0;
   margin-top: 6px;
-  z-index: 60;
   width: 175px;
-  background: rgba(15, 23, 42, 0.94);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 12px;
   padding: 6px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 1px 1px rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
   gap: 3px;
@@ -1014,10 +1050,13 @@ html.theme-light .win-action-btn.win-action-close:hover {
   transform: translateY(0) scale(1);
   pointer-events: auto;
 }
-html.theme-light .project-popover-menu {
-  background: rgba(255, 255, 255, 0.96);
-  border: 1px solid rgba(203, 213, 225, 0.8);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15);
+html.theme-light .project-popover-menu,
+html.theme-light #osSystemDropdown {
+  background: rgba(255, 255, 255, 0.65) !important;
+  backdrop-filter: blur(28px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.85) !important;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12), inset 0 1px 1px 0 rgba(255, 255, 255, 0.95) !important;
 }
 .popover-item {
   display: flex;
@@ -1044,3 +1083,22 @@ html.theme-light .popover-item:hover {
   background: rgba(2, 132, 199, 0.12);
   color: #0284c7;
 }
+
+/* Translucent Modal Dialog Styling */
+#phoneRequestModal > div {
+  background: rgba(18, 26, 44, 0.65) !important;
+  backdrop-filter: blur(36px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(36px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.6), inset 0 1px 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+html.theme-light #phoneRequestModal > div {
+  background: rgba(255, 255, 255, 0.65) !important;
+  backdrop-filter: blur(36px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(36px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 25px 60px -10px rgba(15, 23, 42, 0.15), inset 0 1px 1px 0 rgba(255, 255, 255, 0.95) !important;
+  color: #0f172a !important;
+}
+
