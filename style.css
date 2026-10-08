@@ -947,12 +947,16 @@ html.theme-light .win-action-btn.win-action-close:hover {
 
 /* Maximized Window state - Seamlessly touches top system menu bar (h-8 = 32px) */
 .os-window.maximized {
+  position: fixed !important;
   top: 32px !important;
   left: 0px !important;
+  right: 0px !important;
   width: 100vw !important;
   height: calc(100vh - 32px - 72px) !important;
   border-radius: 0 0 16px 16px !important;
   border-top-width: 0 !important;
+  margin: 0 !important;
+  transform: none !important;
 }
 
 /* Mobile & Tablet Responsiveness */
