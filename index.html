@@ -44,6 +44,7 @@
   <div class="fixed inset-0 w-full h-full pointer-events-none -z-10 overflow-hidden" id="shaderContainer" style="background: #000;">
     <canvas id="shader-canvas" class="w-full h-full block" style="display:block;width:100%;height:100%"></canvas>
   </div>
+  <div id="themeTransitionWave"></div>
 
   <!-- ================= TOP SYSTEM MENU BAR ================= -->
   <header id="systemMenuBar" class="fixed top-0 left-0 right-0 z-50 h-8 px-4 flex items-center justify-between text-xs tracking-tight transition-all duration-300">
@@ -107,7 +108,7 @@
       </div>
 
       <!-- Theme Switcher -->
-      <button id="themeToggleBtn" class="p-1 rounded-md hover:bg-white/10 transition-colors flex items-center justify-center text-primary" title="Toggle Light / Dark Mode">
+      <button id="themeToggleBtn" class="p-1 rounded-md hover:bg-white/10 transition-colors flex items-center justify-center text-primary" title="Appearance">
         <span class="material-symbols-outlined text-[15px]" id="themeToggleIcon">dark_mode</span>
       </button>
 
@@ -579,7 +580,7 @@
           <div class="text-on-surface-variant leading-relaxed">
             <div>Developer Interactive Terminal Shell (x86_64)</div>
             <div>Type <span class="text-primary font-bold">help</span> to list available commands or try <span class="text-tertiary font-bold">skills</span>, <span class="text-secondary font-bold">projects</span>, <span class="text-amber-300 font-bold">contact</span>, <span class="text-white font-bold">bio</span>.</div>
-            <div class="text-[11px] opacity-70">Hint: Try 'cat resume', 'fetch', 'clear', or 'theme'.</div>
+            <div class="text-[11px] opacity-70">Hint: Try 'cat resume', 'fetch', 'clear', or 'help'.</div>
           </div>
           <div id="terminalHistory" class="flex flex-col gap-2"></div>
           <div class="flex items-center gap-2 text-emerald-400 pt-1" id="terminalPromptLine">
@@ -1357,58 +1358,56 @@
 
         <div class="window-body flex-1 overflow-y-auto p-6 flex flex-col gap-5 custom-scrollbar text-on-surface">
           <div>
-            <h3 class="font-display text-lg font-bold text-white">Spatial Aesthetics &amp; Shader Controls</h3>
-            <p class="text-xs text-on-surface-variant">Adjust optical refraction, audio feedback, and procedural themes.</p>
+            <h3 class="font-display text-lg font-bold text-white">System Preferences</h3>
+            <p class="text-xs text-on-surface-variant">Personalize workspace audio feedback, clock formatting, and session controls.</p>
           </div>
 
-          <!-- Setting 1: Theme Mode -->
+          <!-- Setting 1: Clock Display Format -->
           <div class="glass-inset p-4 rounded-xl flex items-center justify-between">
             <div class="flex items-center gap-3">
-              <span class="material-symbols-outlined text-primary text-xl">palette</span>
+              <span class="material-symbols-outlined text-primary text-xl">schedule</span>
               <div>
-                <div class="text-sm font-semibold text-white">Interface Appearance</div>
-                <div class="text-xs text-on-surface-variant">Switch between Deep Obsidian Dark and Crystalline Ice Light Mode.</div>
+                <div class="text-sm font-semibold text-white">Clock Display</div>
+                <div class="text-xs text-on-surface-variant">Switch between 24-hour and 12-hour time formats.</div>
               </div>
             </div>
-            <div class="flex gap-1.5">
-              <button class="px-3 py-1 rounded-lg text-xs font-mono bg-primary text-on-primary font-semibold" onclick="setAppTheme('dark')">Dark Glass</button>
-              <button class="px-3 py-1 rounded-lg text-xs font-mono glass-base hover:bg-white/10" onclick="setAppTheme('light')">Light Glass</button>
+            <div class="flex gap-1.5" id="clockFormatSelector">
+              <button class="px-3 py-1 rounded-lg text-xs font-mono bg-primary text-on-primary font-semibold cursor-pointer" onclick="setClockFormat(true)">24-Hour</button>
+              <button class="px-3 py-1 rounded-lg text-xs font-mono glass-base hover:bg-white/10 cursor-pointer" onclick="setClockFormat(false)">12-Hour</button>
             </div>
           </div>
 
-          <!-- Setting 2: Shader Speed -->
-          <div class="glass-inset p-4 rounded-xl flex items-center justify-between">
-            <div class="flex items-center gap-3">
-              <span class="material-symbols-outlined text-secondary text-xl">waves</span>
-              <div>
-                <div class="text-sm font-semibold text-white">WebGL Fluid Dynamics</div>
-                <div class="text-xs text-on-surface-variant">Interactive procedural shader speed.</div>
-              </div>
-            </div>
-            <div class="flex items-center gap-2">
-              <button class="px-2.5 py-1 rounded-md text-xs font-mono glass-base" onclick="setShaderSpeed(0.1)">Subtle</button>
-              <button class="px-2.5 py-1 rounded-md text-xs font-mono bg-secondary/30 text-secondary border border-secondary/40" onclick="setShaderSpeed(0.28)">Default</button>
-              <button class="px-2.5 py-1 rounded-md text-xs font-mono glass-base" onclick="setShaderSpeed(0.65)">Dynamic</button>
-            </div>
-          </div>
-
-          <!-- Setting 3: Audio Effects -->
+          <!-- Setting 2: Audio Effects -->
           <div class="glass-inset p-4 rounded-xl flex items-center justify-between">
             <div class="flex items-center gap-3">
               <span class="material-symbols-outlined text-tertiary text-xl">volume_up</span>
               <div>
-                <div class="text-sm font-semibold text-white">Spatial Sound Feedback</div>
-                <div class="text-xs text-on-surface-variant">Subtle synthetic audio feedback on click &amp; window movements.</div>
+                <div class="text-sm font-semibold text-white">Sound Feedback</div>
+                <div class="text-xs text-on-surface-variant">Synthetic spatial audio feedback on clicks &amp; actions.</div>
               </div>
             </div>
             <input type="checkbox" id="soundToggleCheckbox" class="w-5 h-5 accent-primary cursor-pointer" checked />
           </div>
 
-          <!-- System Architecture Info -->
+          <!-- Setting 3: Workspace Session -->
+          <div class="glass-inset p-4 rounded-xl flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-secondary text-xl">restart_alt</span>
+              <div>
+                <div class="text-sm font-semibold text-white">Workspace Session</div>
+                <div class="text-xs text-on-surface-variant">Reset open windows and reload session state.</div>
+              </div>
+            </div>
+            <button class="px-3 py-1.5 rounded-lg text-xs font-medium bg-white/10 hover:bg-white/20 text-white cursor-pointer transition-colors" onclick="triggerRestart()">
+              Reload
+            </button>
+          </div>
+
+          <!-- System Profile Overview (NO theme/animation/shader details) -->
           <div class="p-4 rounded-xl bg-surface-container/60 border border-white/5 text-xs text-on-surface-variant flex flex-col gap-1">
-            <div class="font-mono text-white font-semibold">Ayush Sharma • Spatial Portfolio Experience</div>
-            <div>Crafted with high-performance Canvas WebGL Shaders, dynamic glassmorphism, and responsive spatial multi-window ergonomics.</div>
-            <div class="text-[10px] opacity-60 mt-1">Host-optimized for Vercel Free Edge Deployment.</div>
+            <div class="font-mono text-white font-semibold">Ayush Sharma • Candidate Profile</div>
+            <div>B.Tech in Computer Science Engineering &amp; Artificial Intelligence (AKTU)</div>
+            <div class="text-[10px] opacity-60 mt-1">New Delhi, India</div>
           </div>
         </div>
       </div>

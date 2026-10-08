@@ -261,43 +261,110 @@
     requestAnimationFrame(render);
   }
 
-  // ================= 2. SPATIAL WINDOW MANAGER =================
+  // ================= 2. SPATIAL WINDOW MANAGER WITH HIGH-POLISH ANIMATIONS =================
+
+  function triggerDockBounce(appId) {
+    const dockItem = document.querySelector(`.dock-item[data-app="${appId}"]`) ||
+                     document.querySelector(`.dock-item[onclick*="'${appId}'"]`);
+    if (dockItem) {
+      dockItem.classList.remove('dock-bouncing');
+      void dockItem.offsetWidth;
+      dockItem.classList.add('dock-bouncing');
+      setTimeout(() => dockItem.classList.remove('dock-bouncing'), 600);
+    }
+  }
+
+  function triggerDockReceive(appId) {
+    const dockItem = document.querySelector(`.dock-item[data-app="${appId}"]`) ||
+                     document.querySelector(`.dock-item[onclick*="'${appId}'"]`);
+    if (dockItem) {
+      dockItem.classList.remove('dock-receiving');
+      void dockItem.offsetWidth;
+      dockItem.classList.add('dock-receiving');
+      setTimeout(() => dockItem.classList.remove('dock-receiving'), 400);
+    }
+  }
+
   window.openWindow = function (appId) {
     const win = document.getElementById('win-' + appId);
     if (!win) return;
 
+    triggerDockBounce(appId);
     playSound('open');
+
+    win.classList.remove('animating-close', 'animating-minimize', 'animating-restore');
     win.style.display = 'flex';
-    win.classList.remove('animate-window-open');
-    void win.offsetWidth; // trigger reflow
-    win.classList.add('animate-window-open');
+    void win.offsetWidth;
+    win.classList.add('animating-open');
 
     bringToFront(win);
     updateDockDot(appId, true);
     state.activeWindow = appId;
+    state.windowStates[appId] = 'open';
 
-    // Center on mobile/tablet if needed
+    setTimeout(() => {
+      win.classList.remove('animating-open');
+    }, 400);
+
     if (window.innerWidth <= 768) {
       win.classList.add('maximized');
     }
   };
 
-  window.closeWindow = function (appId) {
+  window.restoreWindow = function (appId) {
     const win = document.getElementById('win-' + appId);
     if (!win) return;
 
+    triggerDockBounce(appId);
+    playSound('open');
+
+    win.classList.remove('animating-close', 'animating-minimize', 'animating-open');
+    win.style.display = 'flex';
+    void win.offsetWidth;
+    win.classList.add('animating-restore');
+
+    bringToFront(win);
+    updateDockDot(appId, true);
+    state.activeWindow = appId;
+    state.windowStates[appId] = 'open';
+
+    setTimeout(() => {
+      win.classList.remove('animating-restore');
+    }, 450);
+  };
+
+  window.closeWindow = function (appId) {
+    const win = document.getElementById('win-' + appId);
+    if (!win || win.style.display === 'none' || win.classList.contains('animating-close')) return;
+
     playSound('close');
-    win.style.display = 'none';
-    win.classList.remove('maximized');
-    updateDockDot(appId, false);
+    win.classList.remove('animating-open', 'animating-restore', 'animating-minimize');
+    win.classList.add('animating-close');
+
+    setTimeout(() => {
+      win.style.display = 'none';
+      win.classList.remove('animating-close', 'maximized');
+      updateDockDot(appId, false);
+      state.windowStates[appId] = 'closed';
+    }, 260);
   };
 
   window.minimizeWindow = function (appId) {
     const win = document.getElementById('win-' + appId);
-    if (!win) return;
+    if (!win || win.style.display === 'none' || win.classList.contains('animating-minimize')) return;
 
     playSound('close');
-    win.style.display = 'none';
+    triggerDockReceive(appId);
+
+    win.classList.remove('animating-open', 'animating-restore', 'animating-close');
+    win.classList.add('animating-minimize');
+
+    setTimeout(() => {
+      win.style.display = 'none';
+      win.classList.remove('animating-minimize');
+      state.windowStates[appId] = 'minimized';
+      updateDockDot(appId, true);
+    }, 320);
   };
 
   window.maximizeWindow = function (appId) {
@@ -313,13 +380,21 @@
     const win = document.getElementById('win-' + appId);
     if (!win) return;
 
-    if (win.style.display === 'none' || win.style.display === '') {
-      openWindow(appId);
+    const isHidden = win.style.display === 'none' || win.style.display === '';
+    const isMinimized = state.windowStates[appId] === 'minimized';
+
+    if (isHidden || isMinimized) {
+      if (isMinimized) {
+        window.restoreWindow(appId);
+      } else {
+        window.openWindow(appId);
+      }
     } else {
       if (win.classList.contains('active-window')) {
-        minimizeWindow(appId);
+        window.minimizeWindow(appId);
       } else {
         bringToFront(win);
+        triggerDockBounce(appId);
       }
     }
   };
@@ -394,33 +469,33 @@
   }
 
   // ================= 3. SYSTEM CLOCK & TELEMETRY =================
+  let is24HourFormat = true;
+  let updateClockFn = null;
+
   function initClock() {
     const topClock = document.getElementById('topBarClock');
     const widgetClock = document.getElementById('widgetLargeClock');
     const widgetDate = document.getElementById('widgetDateString');
 
-    let is24HourFormat = true;
-
-    // Toggle 12h / 24h on click without any UI text
     if (widgetClock) {
       widgetClock.addEventListener('click', () => {
         is24HourFormat = !is24HourFormat;
         playSound('click');
-        update();
+        updateClockFn();
       });
     }
     if (topClock) {
       topClock.addEventListener('click', () => {
         is24HourFormat = !is24HourFormat;
         playSound('click');
-        update();
+        updateClockFn();
       });
     }
 
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-    function update() {
+    updateClockFn = function () {
       const now = new Date();
       const rawHrs = now.getHours();
       const rawMins = now.getMinutes();
@@ -453,17 +528,54 @@
         const mName = months[now.getMonth()];
         widgetDate.textContent = `${dName}, ${dNum} ${mName}`;
       }
-    }
-    setInterval(update, 1000);
-    update();
+    };
+
+    setInterval(updateClockFn, 1000);
+    updateClockFn();
   }
 
-  // ================= 4. THEME & SETTINGS ENGINE =================
+  window.setClockFormat = function (is24) {
+    is24HourFormat = is24;
+    playSound('click');
+    if (updateClockFn) updateClockFn();
+    const buttons = document.querySelectorAll('#clockFormatSelector button');
+    if (buttons.length >= 2) {
+      if (is24) {
+        buttons[0].className = 'px-3 py-1 rounded-lg text-xs font-mono bg-primary text-on-primary font-semibold cursor-pointer';
+        buttons[1].className = 'px-3 py-1 rounded-lg text-xs font-mono glass-base hover:bg-white/10 cursor-pointer';
+      } else {
+        buttons[0].className = 'px-3 py-1 rounded-lg text-xs font-mono glass-base hover:bg-white/10 cursor-pointer';
+        buttons[1].className = 'px-3 py-1 rounded-lg text-xs font-mono bg-primary text-on-primary font-semibold cursor-pointer';
+      }
+    }
+  };
+
+  // ================= 4. APPEARANCE & SYSTEM ENGINE =================
   window.setAppTheme = function (theme) {
     state.theme = theme;
     const html = document.documentElement;
     const body = document.body;
     const icon = document.getElementById('themeToggleIcon');
+    const themeBtn = document.getElementById('themeToggleBtn');
+    const wave = document.getElementById('themeTransitionWave');
+
+    playSound('click');
+
+    // Trigger theme icon 360-degree spin
+    if (themeBtn) {
+      themeBtn.classList.remove('theme-spinning');
+      void themeBtn.offsetWidth;
+      themeBtn.classList.add('theme-spinning');
+      setTimeout(() => themeBtn.classList.remove('theme-spinning'), 600);
+    }
+
+    // Trigger cinematic radiant transition wave
+    if (wave) {
+      wave.classList.remove('active');
+      void wave.offsetWidth;
+      wave.classList.add('active');
+      setTimeout(() => wave.classList.remove('active'), 700);
+    }
 
     if (theme === 'light') {
       html.classList.remove('dark');
@@ -478,15 +590,9 @@
       body.classList.remove('theme-light');
       if (icon) icon.textContent = 'dark_mode';
     }
-    showToast('Theme Updated', `Switched to ${theme.toUpperCase()} Liquid Glass appearance.`);
   };
 
-  window.setShaderSpeed = function (speed) {
-    state.shaderSpeed = speed;
-    showToast('Shader Dynamic Mode', `Fluid caustics speed set to ${speed}x.`);
-  };
-
-  // Toast System
+  // Toast System with Spring Exit Animation
   let toastTimer = null;
 
   window.hideToast = function () {
@@ -496,7 +602,10 @@
       clearTimeout(toastTimer);
       toastTimer = null;
     }
-    toast.classList.remove('show');
+    toast.classList.add('toast-closing');
+    setTimeout(() => {
+      toast.classList.remove('show', 'toast-closing');
+    }, 280);
   };
 
   window.showToast = function (title, desc) {
@@ -513,6 +622,7 @@
       toastTimer = null;
     }
 
+    toast.classList.remove('toast-closing');
     toast.classList.add('show');
 
     toastTimer = setTimeout(() => {
@@ -550,8 +660,7 @@
   • <span class="text-white font-bold">contact</span>    - Show direct transmission info
   • <span class="text-rose-400 font-bold">cat resume</span> - Print resume plaintext preview
   • <span class="text-primary font-bold">open &lt;app&gt;</span>  - Launch OS window (e.g., 'open projects', 'open contact')
-  • <span class="text-white font-bold">theme &lt;m&gt;</span>   - Toggle theme ('theme light' / 'theme dark')
-  • <span class="text-white font-bold">fetch</span>      - Print neofetch-style system info
+  • <span class="text-white font-bold">fetch</span>      - Print candidate telemetry info
   • <span class="text-white font-bold">clear</span>      - Clear terminal screen`,
 
       bio: `AYUSH SHARMA | Computer Science Engineering (AI)
@@ -595,10 +704,9 @@ Focus       : AI-powered backends, Multi-provider LLM routing, WebSockets E2EE &
 
       fetch: `       /\_/\          <span class="text-primary font-bold">ayush@developer</span>
       ( o.o )         -------------
-       > ^ <          Host: Vercel Free Edge Network
+       > ^ <          Host: Portfolio Edge Network
                       Uptime: Continuous
                       Shell: zsh 5.9
-                      Engine: WebGL Fluid Dynamics
                       Candidate: Ayush Sharma
                       Degree: B.Tech CSE (AI) '26 @ AKTU
                       Status: Open for Software / AI Roles`,
@@ -712,8 +820,8 @@ Focus       : AI-powered backends, Multi-provider LLM routing, WebSockets E2EE &
     playSound('click');
     const modal = document.getElementById('phoneRequestModal');
     if (modal) {
-      modal.classList.remove('opacity-0', 'pointer-events-none');
-      modal.classList.add('opacity-100', 'pointer-events-auto');
+      modal.classList.remove('opacity-0', 'pointer-events-none', 'modal-closing');
+      modal.classList.add('modal-open');
     }
   };
 
@@ -721,8 +829,11 @@ Focus       : AI-powered backends, Multi-provider LLM routing, WebSockets E2EE &
     playSound('click');
     const modal = document.getElementById('phoneRequestModal');
     if (modal) {
-      modal.classList.add('opacity-0', 'pointer-events-none');
-      modal.classList.remove('opacity-100', 'pointer-events-auto');
+      modal.classList.add('modal-closing');
+      setTimeout(() => {
+        modal.classList.remove('modal-open', 'modal-closing');
+        modal.classList.add('opacity-0', 'pointer-events-none');
+      }, 240);
     }
     const err = document.getElementById('passcodeError');
     if (err) err.classList.add('hidden');

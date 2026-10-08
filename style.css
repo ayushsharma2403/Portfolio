@@ -632,8 +632,18 @@ html.theme-light #systemMenuBar {
 .os-window {
   position: absolute;
   box-shadow: var(--window-shadow);
-  transition: box-shadow 0.25s ease, opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, left, top, width, height;
+  transition: 
+    top 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+    left 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+    right 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+    width 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+    height 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+    border-radius 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease,
+    background-color 0.45s ease;
+  will-change: transform, left, top, width, height, opacity;
+  transform-origin: center center;
 }
 
 .os-window.active-window {
@@ -652,17 +662,18 @@ html.theme-light #systemMenuBar {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.18s ease, color 0.18s ease, box-shadow 0.2s ease;
 }
 
 .win-action-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.14);
   color: var(--color-on-surface);
-  border-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.15);
 }
 
 .win-action-btn:active {
-  transform: scale(0.92);
+  transform: scale(0.85);
 }
 
 .win-action-btn.win-action-close:hover {
@@ -699,6 +710,14 @@ html.theme-light .win-action-btn.win-action-close:hover {
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+.dock-item.dock-bouncing .dock-icon {
+  animation: dockBounce 0.55s cubic-bezier(0.28, 0.84, 0.42, 1) forwards;
+}
+
+.dock-item.dock-receiving .dock-icon {
+  animation: dockReceive 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
 .dock-icon {
   width: 44px;
   height: 44px;
@@ -732,7 +751,7 @@ html.theme-light .win-action-btn.win-action-close:hover {
   opacity: 0;
   pointer-events: none;
   transform: translateY(4px);
-  transition: all 0.2s ease;
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
   border: 1px solid rgba(255, 255, 255, 0.15);
 }
@@ -749,12 +768,13 @@ html.theme-light .win-action-btn.win-action-close:hover {
   background-color: var(--color-primary);
   margin-top: 3px;
   opacity: 0;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .dock-dot.active {
   opacity: 1;
   transform: scale(1.2);
+  animation: dotBreathe 2.4s ease-in-out infinite;
 }
 
 /* Badges & Chips */
@@ -908,33 +928,221 @@ html.theme-light .win-action-btn.win-action-close:hover {
   background: rgba(255, 255, 255, 0.3);
 }
 
-/* Animations */
-@keyframes windowOpen {
-  from {
+/* =========================================================================
+   EXTREMELY HIGH-POLISH SPATIAL ANIMATIONS ENGINE
+   visionOS Physics, Elastic Spring Curves, Inertia & Fluid Transitions
+   ========================================================================= */
+
+/* Window Open Spring */
+@keyframes windowOpenSpring {
+  0% {
     opacity: 0;
-    transform: scale(0.92) translateY(16px);
+    transform: scale(0.8) translateY(36px) perspective(1000px) rotateX(4deg);
+    filter: blur(14px);
   }
-  to {
+  60% {
+    opacity: 0.96;
+    transform: scale(1.025) translateY(-4px) perspective(1000px) rotateX(-0.5deg);
+    filter: blur(0px);
+  }
+  82% {
     opacity: 1;
-    transform: scale(1) translateY(0);
+    transform: scale(0.992) translateY(1px) perspective(1000px) rotateX(0deg);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0) perspective(1000px) rotateX(0deg);
+    filter: blur(0px);
   }
 }
-.animate-window-open {
-  animation: windowOpen 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.animate-window-open,
+.os-window.animating-open {
+  animation: windowOpenSpring 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes popMenu {
-  from {
-    opacity: 0;
-    transform: scale(0.95) translateY(-4px);
-  }
-  to {
+/* Window Close Spring */
+@keyframes windowCloseSpring {
+  0% {
     opacity: 1;
     transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+  30% {
+    opacity: 0.9;
+    transform: scale(0.98) translateY(6px);
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.82) translateY(36px);
+    filter: blur(16px);
   }
 }
-.animate-pop {
-  animation: popMenu 0.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.os-window.animating-close {
+  animation: windowCloseSpring 0.26s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+  pointer-events: none !important;
+}
+
+/* Window Minimize toward Taskbar / Dock */
+@keyframes windowMinimizeSpring {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+  40% {
+    opacity: 0.7;
+    transform: scale(0.7) translateY(120px);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.18) translateY(420px);
+    filter: blur(14px);
+  }
+}
+.os-window.animating-minimize {
+  animation: windowMinimizeSpring 0.32s cubic-bezier(0.32, 0.72, 0, 1) forwards !important;
+  pointer-events: none !important;
+}
+
+/* Window Restore from Taskbar / Dock */
+@keyframes windowRestoreSpring {
+  0% {
+    opacity: 0;
+    transform: scale(0.24) translateY(380px);
+    filter: blur(14px);
+  }
+  65% {
+    opacity: 0.98;
+    transform: scale(1.03) translateY(-8px);
+    filter: blur(0);
+  }
+  85% {
+    opacity: 1;
+    transform: scale(0.99) translateY(2px);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+.os-window.animating-restore {
+  animation: windowRestoreSpring 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Dock Bounce & Receive Physics */
+@keyframes dockBounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  30% { transform: translateY(-20px) scale(1.24); }
+  55% { transform: translateY(0) scale(0.92); }
+  75% { transform: translateY(-8px) scale(1.08); }
+  90% { transform: translateY(0) scale(0.98); }
+}
+
+@keyframes dockReceive {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.25); filter: drop-shadow(0 0 14px var(--color-primary)); }
+  70% { transform: scale(0.92); }
+  100% { transform: scale(1); filter: none; }
+}
+
+@keyframes dotBreathe {
+  0%, 100% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 6px var(--color-primary); }
+  50% { transform: scale(0.85); opacity: 0.65; box-shadow: none; }
+}
+
+/* Theme Switching Smooth Wave & Button Spin */
+@keyframes themeSpin {
+  0% { transform: rotate(0deg) scale(0.7); }
+  60% { transform: rotate(240deg) scale(1.3); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+.theme-spinning {
+  animation: themeSpin 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+#themeTransitionWave {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.45) 0%, rgba(10, 132, 255, 0.2) 40%, transparent 80%);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+html.theme-light #themeTransitionWave {
+  background: radial-gradient(circle at top right, rgba(15, 23, 42, 0.45) 0%, rgba(10, 132, 255, 0.2) 40%, transparent 80%);
+}
+#themeTransitionWave.active {
+  animation: themeWaveExpand 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes themeWaveExpand {
+  0% { opacity: 0; transform: scale(0.8); }
+  40% { opacity: 0.9; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.15); }
+}
+
+/* Modal Spring In & Out */
+@keyframes modalSpringIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(28px);
+    filter: blur(14px);
+  }
+  65% {
+    opacity: 0.98;
+    transform: scale(1.03) translateY(-4px);
+    filter: blur(0);
+  }
+  85% {
+    opacity: 1;
+    transform: scale(0.99) translateY(1px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes modalSpringOut {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.82) translateY(24px);
+    filter: blur(12px);
+  }
+}
+
+/* Popover Spring Entrance */
+@keyframes popoverSpring {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.92);
+    filter: blur(8px);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(2px) scale(1.02);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+.animate-pop,
+#osSystemDropdown:not(.hidden) {
+  animation: popoverSpring 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes fadeIn {
@@ -943,6 +1151,41 @@ html.theme-light .win-action-btn.win-action-close:hover {
 }
 .animate-fade-in {
   animation: fadeIn 0.4s ease forwards;
+}
+
+/* Toast Notifications Entrance and Exit */
+@keyframes toastEnter {
+  0% {
+    opacity: 0;
+    transform: translateX(110%) scale(0.9);
+    filter: blur(10px);
+  }
+  65% {
+    opacity: 1;
+    transform: translateX(-12px) scale(1.02);
+    filter: blur(0);
+  }
+  85% {
+    transform: translateX(4px) scale(0.99);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes toastExit {
+  0% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(80%) scale(0.88);
+    filter: blur(12px);
+  }
 }
 
 /* Maximized Window state - Seamlessly touches top system menu bar (h-8 = 32px) */
@@ -1089,6 +1332,23 @@ html.theme-light .popover-item:hover {
 }
 
 /* Translucent Modal Dialog Styling */
+#phoneRequestModal {
+  transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 0.32s ease;
+}
+
+#phoneRequestModal.modal-open {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+#phoneRequestModal.modal-open > div {
+  animation: modalSpringIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+#phoneRequestModal.modal-closing > div {
+  animation: modalSpringOut 0.24s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
 #phoneRequestModal > div {
   background: rgba(18, 26, 44, 0.65) !important;
   backdrop-filter: blur(36px) saturate(190%) !important;
@@ -1112,15 +1372,22 @@ html.theme-light #phoneRequestModal > div {
   top: 48px;
   right: 24px;
   z-index: 100;
-  transform: translateX(120%);
+  transform: translateX(120%) scale(0.9);
   opacity: 0;
   pointer-events: none;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  filter: blur(10px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, filter 0.3s ease;
 }
 
 .toast-notification.show {
-  transform: translateX(0);
+  transform: translateX(0) scale(1);
   opacity: 1;
   pointer-events: auto;
+  filter: blur(0);
+  animation: toastEnter 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.toast-notification.toast-closing {
+  animation: toastExit 0.28s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
