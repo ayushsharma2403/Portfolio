@@ -235,13 +235,6 @@
         targetMouse.x = nx * canvas.width;
         targetMouse.y = ny * canvas.height;
       }
-
-      // Ambient cursor follower
-      const glow = document.getElementById('cursorGlow');
-      if (glow) {
-        glow.style.left = event.clientX + 'px';
-        glow.style.top = event.clientY + 'px';
-      }
     }, { passive: true });
 
     // Smooth thematic crossfade state
