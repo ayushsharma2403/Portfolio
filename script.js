@@ -444,7 +444,7 @@
   };
 
   window.triggerRestart = function () {
-    showToast('System Reboot', 'Aura OS restarted.');
+    showToast('Reloading', 'Refreshing workspace session.');
     setTimeout(() => {
       location.reload();
     }, 800);
@@ -510,13 +510,12 @@ Focus       : AI-powered backends, Multi-provider LLM routing, WebSockets E2EE &
   • LinkedIn: https://www.linkedin.com/in/ayush-sharma-47b60a370/
   • Phone: +91-8506943880`,
 
-      fetch: `       /\_/\          <span class="text-primary font-bold">ayush@aura-os</span>
+      fetch: `       /\_/\          <span class="text-primary font-bold">ayush@developer</span>
       ( o.o )         -------------
-       > ^ <          OS: Aura Spatial OS v2.4 (x86_64)
-                      Host: Vercel Free Edge Network
+       > ^ <          Host: Vercel Free Edge Network
                       Uptime: Continuous
                       Shell: zsh 5.9
-                      Engine: WebGL Fluid Caustics
+                      Engine: WebGL Fluid Dynamics
                       Candidate: Ayush Sharma
                       Degree: B.Tech CSE (AI) '26 @ AKTU
                       Status: Open for Software / AI Roles`,
@@ -535,7 +534,7 @@ Focus       : AI-powered backends, Multi-provider LLM routing, WebSockets E2EE &
         // Command line render
         const cmdLine = document.createElement('div');
         cmdLine.className = 'flex items-center gap-2 text-emerald-400';
-        cmdLine.innerHTML = `<span class="text-primary">ayush@aura-os</span><span class="text-white">:</span><span class="text-secondary">~</span><span class="text-emerald-400">$</span> <span class="text-white">${escapeHtml(raw)}</span>`;
+        cmdLine.innerHTML = `<span class="text-primary">ayush</span><span class="text-white">:</span><span class="text-secondary">~</span><span class="text-emerald-400">$</span> <span class="text-white">${escapeHtml(raw)}</span>`;
         history.appendChild(cmdLine);
 
         // Command evaluation
@@ -717,7 +716,7 @@ Focus       : AI-powered backends, Multi-provider LLM routing, WebSockets E2EE &
 
     // Welcome Toast
     setTimeout(() => {
-      showToast('Aura Spatial OS v2.4 Active', 'Welcome to Ayush Sharma\'s developer portfolio.');
+      showToast('Ayush Sharma Portfolio Active', 'Welcome to my developer portfolio.');
     }, 1000);
   });
 })();
