@@ -55,23 +55,23 @@
           <span class="font-display tracking-tight font-bold text-sm text-white">AYUSH SHARMA</span>
         </button>
         <!-- System Dropdown Menu -->
-        <div id="osSystemDropdown" class="hidden absolute top-7 left-0 w-52 py-1.5 rounded-xl glass-elevated shadow-2xl border border-white/10 text-xs flex-col z-50 animate-pop">
-          <button class="px-3 py-1.5 text-left hover:bg-primary/20 flex items-center justify-between" onclick="openWindow('about'); hideDropdowns();">
-            <span>Profile Overview</span> <span class="text-[10px] opacity-60">⌘I</span>
+        <div id="osSystemDropdown" class="hidden absolute top-7 left-0 w-44 py-1.5 rounded-xl glass-elevated shadow-2xl border border-white/10 text-xs flex-col z-50 animate-pop">
+          <button class="px-3 py-1.5 text-left hover:bg-primary/20 flex items-center" onclick="openWindow('about'); hideDropdowns();">
+            <span>Profile Overview</span>
           </button>
-          <button class="px-3 py-1.5 text-left hover:bg-primary/20 flex items-center justify-between" onclick="openWindow('settings'); hideDropdowns();">
-            <span>Preferences...</span> <span class="text-[10px] opacity-60">⌘,</span>
-          </button>
-          <div class="my-1 border-t border-white/10"></div>
-          <button class="px-3 py-1.5 text-left hover:bg-primary/20 flex items-center justify-between" onclick="openWindow('projects'); hideDropdowns();">
-            <span>Project Explorer</span> <span class="text-[10px] opacity-60">⌥P</span>
+          <button class="px-3 py-1.5 text-left hover:bg-primary/20 flex items-center" onclick="openWindow('settings'); hideDropdowns();">
+            <span>Preferences...</span>
           </button>
           <div class="my-1 border-t border-white/10"></div>
-          <button class="px-3 py-1.5 text-left hover:bg-primary/20 flex items-center justify-between text-tertiary" onclick="openWindow('contact'); hideDropdowns();">
-            <span>Contact / Hire</span> <span class="text-[10px] opacity-60">⌘M</span>
+          <button class="px-3 py-1.5 text-left hover:bg-primary/20 flex items-center" onclick="openWindow('projects'); hideDropdowns();">
+            <span>Project Explorer</span>
           </button>
-          <button class="px-3 py-1.5 text-left hover:bg-primary/20 flex items-center justify-between" onclick="triggerRestart(); hideDropdowns();">
-            <span>Reload Workspace</span> <span class="text-[10px] opacity-60">⌃R</span>
+          <div class="my-1 border-t border-white/10"></div>
+          <button class="px-3 py-1.5 text-left hover:bg-primary/20 flex items-center text-tertiary" onclick="openWindow('contact'); hideDropdowns();">
+            <span>Contact / Hire</span>
+          </button>
+          <button class="px-3 py-1.5 text-left hover:bg-primary/20 flex items-center" onclick="triggerRestart(); hideDropdowns();">
+            <span>Reload Workspace</span>
           </button>
         </div>
       </div>
