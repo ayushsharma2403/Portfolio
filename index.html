@@ -211,19 +211,24 @@
       <!-- ================= 1. ABOUT / PROFILE WINDOW ================= -->
       <div id="win-about" class="os-window glass-elevated rounded-2xl shadow-2xl flex flex-col pointer-events-auto animate-window-open" data-window="about" style="width: 780px; height: 560px; top: 70px; left: 160px; z-index: 20;">
         <div class="window-titlebar h-10 px-3.5 flex items-center justify-between border-b border-white/10 cursor-move select-none">
+          <!-- Left: Window Title & Meta -->
           <div class="flex items-center gap-2">
-            <div class="window-controls flex items-center gap-1.5">
-              <button class="win-btn win-close bg-[#FF5F56]" onclick="closeWindow('about')" title="Close"></button>
-              <button class="win-btn win-min bg-[#FFBD2E]" onclick="minimizeWindow('about')" title="Minimize"></button>
-              <button class="win-btn win-max bg-[#27C93F]" onclick="maximizeWindow('about')" title="Maximize"></button>
-            </div>
-            <div class="ml-3 flex items-center gap-1.5 text-xs font-mono text-on-surface">
-              <span class="material-symbols-outlined text-sm text-primary">person</span>
-              <span class="font-semibold">Ayush_Sharma.profile</span>
-            </div>
+            <span class="material-symbols-outlined text-sm text-primary">person</span>
+            <span class="font-semibold text-xs font-mono text-on-surface">Ayush_Sharma.profile</span>
+            <span class="ml-2 text-[10px] font-mono px-1.5 py-0.5 rounded bg-primary/10 text-primary border border-primary/20">B.Tech CSE (AI) '26</span>
           </div>
-          <div class="text-[11px] font-mono text-on-surface-variant flex items-center gap-2">
-            <span class="px-1.5 py-0.5 rounded bg-primary/10 text-primary border border-primary/20">B.Tech CSE (AI) '26</span>
+
+          <!-- Right: Native Action Controls (Minimize, Maximize, Close) -->
+          <div class="window-controls flex items-center gap-1">
+            <button class="win-action-btn" onclick="minimizeWindow('about')" title="Minimize">
+              <span class="material-symbols-outlined text-[15px]">remove</span>
+            </button>
+            <button class="win-action-btn" onclick="maximizeWindow('about')" title="Maximize">
+              <span class="material-symbols-outlined text-[14px]">crop_square</span>
+            </button>
+            <button class="win-action-btn win-action-close" onclick="closeWindow('about')" title="Close">
+              <span class="material-symbols-outlined text-[15px]">close</span>
+            </button>
           </div>
         </div>
 
@@ -338,19 +343,24 @@
       <!-- ================= 2. PROJECTS WINDOW ================= -->
       <div id="win-projects" class="os-window glass-elevated rounded-2xl shadow-2xl flex flex-col pointer-events-auto" data-window="projects" style="width: 820px; height: 580px; top: 90px; left: 220px; z-index: 15; display: none;">
         <div class="window-titlebar h-10 px-3.5 flex items-center justify-between border-b border-white/10 cursor-move select-none">
+          <!-- Left: Window Title & Meta -->
           <div class="flex items-center gap-2">
-            <div class="window-controls flex items-center gap-1.5">
-              <button class="win-btn win-close bg-[#FF5F56]" onclick="closeWindow('projects')" title="Close"></button>
-              <button class="win-btn win-min bg-[#FFBD2E]" onclick="minimizeWindow('projects')" title="Minimize"></button>
-              <button class="win-btn win-max bg-[#27C93F]" onclick="maximizeWindow('projects')" title="Maximize"></button>
-            </div>
-            <div class="ml-3 flex items-center gap-1.5 text-xs font-mono text-on-surface">
-              <span class="material-symbols-outlined text-sm text-secondary">deployed_code</span>
-              <span class="font-semibold">Shipped_Production_Projects.app</span>
-            </div>
+            <span class="material-symbols-outlined text-sm text-secondary">deployed_code</span>
+            <span class="font-semibold text-xs font-mono text-on-surface">Shipped_Production_Projects.app</span>
+            <span class="ml-2 text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10">3 Projects</span>
           </div>
-          <div class="flex items-center gap-1 text-[11px] font-mono text-on-surface-variant">
-            <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10">3 Primary Projects</span>
+
+          <!-- Right: Native Action Controls (Minimize, Maximize, Close) -->
+          <div class="window-controls flex items-center gap-1">
+            <button class="win-action-btn" onclick="minimizeWindow('projects')" title="Minimize">
+              <span class="material-symbols-outlined text-[15px]">remove</span>
+            </button>
+            <button class="win-action-btn" onclick="maximizeWindow('projects')" title="Maximize">
+              <span class="material-symbols-outlined text-[14px]">crop_square</span>
+            </button>
+            <button class="win-action-btn win-action-close" onclick="closeWindow('projects')" title="Close">
+              <span class="material-symbols-outlined text-[15px]">close</span>
+            </button>
           </div>
         </div>
 
@@ -485,19 +495,24 @@
       <!-- ================= 3. TERMINAL WINDOW (RETRO CYBERPUNK CLI) ================= -->
       <div id="win-terminal" class="os-window glass-elevated rounded-2xl shadow-2xl flex flex-col pointer-events-auto" data-window="terminal" style="width: 760px; height: 500px; top: 120px; left: 280px; z-index: 18; display: none;">
         <div class="window-titlebar h-10 px-3.5 flex items-center justify-between border-b border-white/10 cursor-move select-none bg-[#050914]/90">
+          <!-- Left: Window Title & Meta -->
           <div class="flex items-center gap-2">
-            <div class="window-controls flex items-center gap-1.5">
-              <button class="win-btn win-close bg-[#FF5F56]" onclick="closeWindow('terminal')" title="Close"></button>
-              <button class="win-btn win-min bg-[#FFBD2E]" onclick="minimizeWindow('terminal')" title="Minimize"></button>
-              <button class="win-btn win-max bg-[#27C93F]" onclick="maximizeWindow('terminal')" title="Maximize"></button>
-            </div>
-            <div class="ml-3 flex items-center gap-1.5 text-xs font-mono text-emerald-400">
-              <span class="material-symbols-outlined text-sm">terminal</span>
-              <span class="font-semibold">ayush@aura-os: ~ (zsh)</span>
-            </div>
+            <span class="material-symbols-outlined text-sm text-emerald-400">terminal</span>
+            <span class="font-semibold text-xs font-mono text-emerald-400">ayush@aura-os: ~ (zsh)</span>
+            <span class="ml-2 text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/5 text-on-surface-variant">pty/3 • x86_64</span>
           </div>
-          <div class="text-[11px] font-mono text-on-surface-variant flex items-center gap-2">
-            <span>pty/3 • x86_64</span>
+
+          <!-- Right: Native Action Controls (Minimize, Maximize, Close) -->
+          <div class="window-controls flex items-center gap-1">
+            <button class="win-action-btn" onclick="minimizeWindow('terminal')" title="Minimize">
+              <span class="material-symbols-outlined text-[15px]">remove</span>
+            </button>
+            <button class="win-action-btn" onclick="maximizeWindow('terminal')" title="Maximize">
+              <span class="material-symbols-outlined text-[14px]">crop_square</span>
+            </button>
+            <button class="win-action-btn win-action-close" onclick="closeWindow('terminal')" title="Close">
+              <span class="material-symbols-outlined text-[15px]">close</span>
+            </button>
           </div>
         </div>
 
@@ -518,18 +533,25 @@
       <!-- ================= 4. TECHNICAL SKILLS MATRIX WINDOW ================= -->
       <div id="win-skills" class="os-window glass-elevated rounded-2xl shadow-2xl flex flex-col pointer-events-auto" data-window="skills" style="width: 750px; height: 530px; top: 100px; left: 250px; z-index: 12; display: none;">
         <div class="window-titlebar h-10 px-3.5 flex items-center justify-between border-b border-white/10 cursor-move select-none">
+          <!-- Left: Window Title & Meta -->
           <div class="flex items-center gap-2">
-            <div class="window-controls flex items-center gap-1.5">
-              <button class="win-btn win-close bg-[#FF5F56]" onclick="closeWindow('skills')" title="Close"></button>
-              <button class="win-btn win-min bg-[#FFBD2E]" onclick="minimizeWindow('skills')" title="Minimize"></button>
-              <button class="win-btn win-max bg-[#27C93F]" onclick="maximizeWindow('skills')" title="Maximize"></button>
-            </div>
-            <div class="ml-3 flex items-center gap-1.5 text-xs font-mono text-on-surface">
-              <span class="material-symbols-outlined text-sm text-amber-400">cpu</span>
-              <span class="font-semibold">Technical_Stack_Matrix.cfg</span>
-            </div>
+            <span class="material-symbols-outlined text-sm text-amber-400">cpu</span>
+            <span class="font-semibold text-xs font-mono text-on-surface">Technical_Stack_Matrix.cfg</span>
+            <span class="ml-2 text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-400/10 text-amber-300 border border-amber-400/20">Verified</span>
           </div>
-          <div class="text-[11px] font-mono text-on-surface-variant">Telemetry Active</div>
+
+          <!-- Right: Native Action Controls (Minimize, Maximize, Close) -->
+          <div class="window-controls flex items-center gap-1">
+            <button class="win-action-btn" onclick="minimizeWindow('skills')" title="Minimize">
+              <span class="material-symbols-outlined text-[15px]">remove</span>
+            </button>
+            <button class="win-action-btn" onclick="maximizeWindow('skills')" title="Maximize">
+              <span class="material-symbols-outlined text-[14px]">crop_square</span>
+            </button>
+            <button class="win-action-btn win-action-close" onclick="closeWindow('skills')" title="Close">
+              <span class="material-symbols-outlined text-[15px]">close</span>
+            </button>
+          </div>
         </div>
 
         <div class="window-body flex-1 overflow-y-auto p-6 flex flex-col gap-5 custom-scrollbar text-on-surface">
@@ -639,18 +661,25 @@
       <!-- ================= 5. EXPERIENCE WINDOW ================= -->
       <div id="win-experience" class="os-window glass-elevated rounded-2xl shadow-2xl flex flex-col pointer-events-auto" data-window="experience" style="width: 720px; height: 500px; top: 110px; left: 240px; z-index: 14; display: none;">
         <div class="window-titlebar h-10 px-3.5 flex items-center justify-between border-b border-white/10 cursor-move select-none">
+          <!-- Left: Window Title & Meta -->
           <div class="flex items-center gap-2">
-            <div class="window-controls flex items-center gap-1.5">
-              <button class="win-btn win-close bg-[#FF5F56]" onclick="closeWindow('experience')" title="Close"></button>
-              <button class="win-btn win-min bg-[#FFBD2E]" onclick="minimizeWindow('experience')" title="Minimize"></button>
-              <button class="win-btn win-max bg-[#27C93F]" onclick="maximizeWindow('experience')" title="Maximize"></button>
-            </div>
-            <div class="ml-3 flex items-center gap-1.5 text-xs font-mono text-on-surface">
-              <span class="material-symbols-outlined text-sm text-primary">work</span>
-              <span class="font-semibold">Work_Experience_Log.log</span>
-            </div>
+            <span class="material-symbols-outlined text-sm text-primary">work</span>
+            <span class="font-semibold text-xs font-mono text-on-surface">Work_Experience_Log.log</span>
+            <span class="ml-2 text-[10px] font-mono px-1.5 py-0.5 rounded bg-primary/10 text-primary border border-primary/20">Chronological</span>
           </div>
-          <div class="text-[11px] font-mono text-on-surface-variant">Chronological Dossier</div>
+
+          <!-- Right: Native Action Controls (Minimize, Maximize, Close) -->
+          <div class="window-controls flex items-center gap-1">
+            <button class="win-action-btn" onclick="minimizeWindow('experience')" title="Minimize">
+              <span class="material-symbols-outlined text-[15px]">remove</span>
+            </button>
+            <button class="win-action-btn" onclick="maximizeWindow('experience')" title="Maximize">
+              <span class="material-symbols-outlined text-[14px]">crop_square</span>
+            </button>
+            <button class="win-action-btn win-action-close" onclick="closeWindow('experience')" title="Close">
+              <span class="material-symbols-outlined text-[15px]">close</span>
+            </button>
+          </div>
         </div>
 
         <div class="window-body flex-1 overflow-y-auto p-6 flex flex-col gap-6 custom-scrollbar text-on-surface">
@@ -713,19 +742,23 @@
       <!-- ================= 6. CERTIFICATIONS WINDOW ================= -->
       <div id="win-certifications" class="os-window glass-elevated rounded-2xl shadow-2xl flex flex-col pointer-events-auto" data-window="certifications" style="width: 740px; height: 520px; top: 115px; left: 260px; z-index: 13; display: none;">
         <div class="window-titlebar h-10 px-3.5 flex items-center justify-between border-b border-white/10 cursor-move select-none">
+          <!-- Left: Window Title & Meta -->
           <div class="flex items-center gap-2">
-            <div class="window-controls flex items-center gap-1.5">
-              <button class="win-btn win-close bg-[#FF5F56]" onclick="closeWindow('certifications')" title="Close"></button>
-              <button class="win-btn win-min bg-[#FFBD2E]" onclick="minimizeWindow('certifications')" title="Minimize"></button>
-              <button class="win-btn win-max bg-[#27C93F]" onclick="maximizeWindow('certifications')" title="Maximize"></button>
-            </div>
-            <div class="ml-3 flex items-center gap-1.5 text-xs font-mono text-on-surface">
-              <span class="material-symbols-outlined text-sm text-secondary">verified</span>
-              <span class="font-semibold">Verified_Credentials_Audit.sig</span>
-            </div>
+            <span class="material-symbols-outlined text-sm text-secondary">verified</span>
+            <span class="font-semibold text-xs font-mono text-on-surface">Verified_Credentials_Audit.sig</span>
           </div>
-          <div class="text-[11px] font-mono text-tertiary flex items-center gap-1">
-            <span class="material-symbols-outlined text-xs">shield_check</span> Verified Signatures
+
+          <!-- Right: Native Action Controls (Minimize, Maximize, Close) -->
+          <div class="window-controls flex items-center gap-1">
+            <button class="win-action-btn" onclick="minimizeWindow('certifications')" title="Minimize">
+              <span class="material-symbols-outlined text-[15px]">remove</span>
+            </button>
+            <button class="win-action-btn" onclick="maximizeWindow('certifications')" title="Maximize">
+              <span class="material-symbols-outlined text-[14px]">crop_square</span>
+            </button>
+            <button class="win-action-btn win-action-close" onclick="closeWindow('certifications')" title="Close">
+              <span class="material-symbols-outlined text-[15px]">close</span>
+            </button>
           </div>
         </div>
 
@@ -810,20 +843,25 @@
       <!-- ================= 7. RESUME VIEWER WINDOW ================= -->
       <div id="win-resume" class="os-window glass-elevated rounded-2xl shadow-2xl flex flex-col pointer-events-auto" data-window="resume" style="width: 760px; height: 560px; top: 80px; left: 200px; z-index: 16; display: none;">
         <div class="window-titlebar h-10 px-3.5 flex items-center justify-between border-b border-white/10 cursor-move select-none">
+          <!-- Left: Window Title & Meta -->
           <div class="flex items-center gap-2">
-            <div class="window-controls flex items-center gap-1.5">
-              <button class="win-btn win-close bg-[#FF5F56]" onclick="closeWindow('resume')" title="Close"></button>
-              <button class="win-btn win-min bg-[#FFBD2E]" onclick="minimizeWindow('resume')" title="Minimize"></button>
-              <button class="win-btn win-max bg-[#27C93F]" onclick="maximizeWindow('resume')" title="Maximize"></button>
-            </div>
-            <div class="ml-3 flex items-center gap-1.5 text-xs font-mono text-on-surface">
-              <span class="material-symbols-outlined text-sm text-rose-400">description</span>
-              <span class="font-semibold">Ayush_Sharma_Resume.pdf [Viewer]</span>
-            </div>
+            <span class="material-symbols-outlined text-sm text-rose-400">description</span>
+            <span class="font-semibold text-xs font-mono text-on-surface">Ayush_Sharma_Resume.pdf</span>
+            <button class="ml-2 px-2 py-0.5 rounded bg-primary text-on-primary font-mono text-[10px] flex items-center gap-1" onclick="window.print()">
+              <span class="material-symbols-outlined text-[12px]">print</span> Print / PDF
+            </button>
           </div>
-          <div class="flex items-center gap-2">
-            <button class="px-2 py-0.5 rounded bg-primary text-on-primary font-mono text-xs flex items-center gap-1" onclick="window.print()">
-              <span class="material-symbols-outlined text-xs">print</span> Print / Save PDF
+
+          <!-- Right: Native Action Controls (Minimize, Maximize, Close) -->
+          <div class="window-controls flex items-center gap-1">
+            <button class="win-action-btn" onclick="minimizeWindow('resume')" title="Minimize">
+              <span class="material-symbols-outlined text-[15px]">remove</span>
+            </button>
+            <button class="win-action-btn" onclick="maximizeWindow('resume')" title="Maximize">
+              <span class="material-symbols-outlined text-[14px]">crop_square</span>
+            </button>
+            <button class="win-action-btn win-action-close" onclick="closeWindow('resume')" title="Close">
+              <span class="material-symbols-outlined text-[15px]">close</span>
             </button>
           </div>
         </div>
@@ -907,18 +945,24 @@
       <!-- ================= 8. CONTACT / DISPATCH MODAL WINDOW ================= -->
       <div id="win-contact" class="os-window glass-elevated rounded-2xl shadow-2xl flex flex-col pointer-events-auto" data-window="contact" style="width: 580px; height: 520px; top: 120px; left: 320px; z-index: 25; display: none;">
         <div class="window-titlebar h-10 px-3.5 flex items-center justify-between border-b border-white/10 cursor-move select-none">
+          <!-- Left: Window Title & Meta -->
           <div class="flex items-center gap-2">
-            <div class="window-controls flex items-center gap-1.5">
-              <button class="win-btn win-close bg-[#FF5F56]" onclick="closeWindow('contact')" title="Close"></button>
-              <button class="win-btn win-min bg-[#FFBD2E]" onclick="minimizeWindow('contact')" title="Minimize"></button>
-              <button class="win-btn win-max bg-[#27C93F]" onclick="maximizeWindow('contact')" title="Maximize"></button>
-            </div>
-            <div class="ml-3 flex items-center gap-1.5 text-xs font-mono text-tertiary">
-              <span class="material-symbols-outlined text-sm">send</span>
-              <span class="font-semibold">Secure_Transmission_Dispatcher.pkg</span>
-            </div>
+            <span class="material-symbols-outlined text-sm text-tertiary">send</span>
+            <span class="font-semibold text-xs font-mono text-on-surface">Secure_Transmission_Dispatcher.pkg</span>
           </div>
-          <div class="text-[11px] font-mono text-on-surface-variant">Encrypted Channel</div>
+
+          <!-- Right: Native Action Controls (Minimize, Maximize, Close) -->
+          <div class="window-controls flex items-center gap-1">
+            <button class="win-action-btn" onclick="minimizeWindow('contact')" title="Minimize">
+              <span class="material-symbols-outlined text-[15px]">remove</span>
+            </button>
+            <button class="win-action-btn" onclick="maximizeWindow('contact')" title="Maximize">
+              <span class="material-symbols-outlined text-[14px]">crop_square</span>
+            </button>
+            <button class="win-action-btn win-action-close" onclick="closeWindow('contact')" title="Close">
+              <span class="material-symbols-outlined text-[15px]">close</span>
+            </button>
+          </div>
         </div>
 
         <div class="window-body flex-1 overflow-y-auto p-6 flex flex-col gap-4 custom-scrollbar text-on-surface">
@@ -962,18 +1006,24 @@
       <!-- ================= 9. SETTINGS & CUSTOMIZATION WINDOW ================= -->
       <div id="win-settings" class="os-window glass-elevated rounded-2xl shadow-2xl flex flex-col pointer-events-auto" data-window="settings" style="width: 650px; height: 480px; top: 130px; left: 270px; z-index: 17; display: none;">
         <div class="window-titlebar h-10 px-3.5 flex items-center justify-between border-b border-white/10 cursor-move select-none">
+          <!-- Left: Window Title & Meta -->
           <div class="flex items-center gap-2">
-            <div class="window-controls flex items-center gap-1.5">
-              <button class="win-btn win-close bg-[#FF5F56]" onclick="closeWindow('settings')" title="Close"></button>
-              <button class="win-btn win-min bg-[#FFBD2E]" onclick="minimizeWindow('settings')" title="Minimize"></button>
-              <button class="win-btn win-max bg-[#27C93F]" onclick="maximizeWindow('settings')" title="Maximize"></button>
-            </div>
-            <div class="ml-3 flex items-center gap-1.5 text-xs font-mono text-on-surface">
-              <span class="material-symbols-outlined text-sm text-primary">settings</span>
-              <span class="font-semibold">System_Preferences.os</span>
-            </div>
+            <span class="material-symbols-outlined text-sm text-primary">settings</span>
+            <span class="font-semibold text-xs font-mono text-on-surface">System_Preferences.os</span>
           </div>
-          <div class="text-[11px] font-mono text-on-surface-variant">Preferences</div>
+
+          <!-- Right: Native Action Controls (Minimize, Maximize, Close) -->
+          <div class="window-controls flex items-center gap-1">
+            <button class="win-action-btn" onclick="minimizeWindow('settings')" title="Minimize">
+              <span class="material-symbols-outlined text-[15px]">remove</span>
+            </button>
+            <button class="win-action-btn" onclick="maximizeWindow('settings')" title="Maximize">
+              <span class="material-symbols-outlined text-[14px]">crop_square</span>
+            </button>
+            <button class="win-action-btn win-action-close" onclick="closeWindow('settings')" title="Close">
+              <span class="material-symbols-outlined text-[15px]">close</span>
+            </button>
+          </div>
         </div>
 
         <div class="window-body flex-1 overflow-y-auto p-6 flex flex-col gap-5 custom-scrollbar text-on-surface">
