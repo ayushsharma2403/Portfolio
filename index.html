@@ -41,9 +41,8 @@
 <body class="theme-dark select-none overflow-hidden">
 
   <!-- Interactive WebGL Fluid Caustics & Liquid Glass Background -->
-  <div class="fixed inset-0 w-full h-full pointer-events-none -z-10 overflow-hidden" id="shaderContainer">
-    <canvas id="shader-canvas" class="w-full h-full block"></canvas>
-    <div id="bgMeshOverlay" class="absolute inset-0 transition-colors duration-700 pointer-events-none"></div>
+  <div class="fixed inset-0 w-full h-full pointer-events-none -z-10 overflow-hidden" id="shaderContainer" style="background: #000;">
+    <canvas id="shader-canvas" class="w-full h-full block" style="display:block;width:100%;height:100%"></canvas>
   </div>
 
   <!-- Ambient Cursor Aura Glow -->

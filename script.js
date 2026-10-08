@@ -196,6 +196,9 @@
       const s = gl.createShader(type);
       gl.shaderSource(s, src);
       gl.compileShader(s);
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+        console.error('Shader compile error:', gl.getShaderInfoLog(s));
+      }
       return s;
     }
 
@@ -203,6 +206,9 @@
     gl.attachShader(prog, cs(gl.VERTEX_SHADER, vsSource));
     gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fsSource));
     gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+      console.error('Shader program link error:', gl.getProgramInfoLog(prog));
+    }
     gl.useProgram(prog);
 
     const buf = gl.createBuffer();
