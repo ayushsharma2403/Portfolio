@@ -622,6 +622,22 @@ Focus       : AI-powered backends, Multi-provider LLM routing, WebSockets E2EE &
     });
   }
 
+  // Reveal Phone On Request Function
+  window.revealPhone = function () {
+    playSound('click');
+    const phone = '+91-8506943880';
+    const cardEl = document.getElementById('phoneRevealText');
+    const bioEl = document.getElementById('bioPhoneText');
+    
+    if (cardEl) {
+      cardEl.innerHTML = `<a href="tel:${phone}" class="hover:underline text-white font-bold">${phone}</a>`;
+    }
+    if (bioEl) {
+      bioEl.innerHTML = `<a href="tel:${phone}" class="hover:underline text-primary font-bold">${phone}</a>`;
+    }
+    showToast('Phone Number Requested', `Contact phone revealed: ${phone}`);
+  };
+
   // ================= 7. GLOBAL BINDINGS & KEYBOARD SHORTCUTS =================
   function initGlobalShortcuts() {
     // OS dropdown button toggle
