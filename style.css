@@ -1106,3 +1106,21 @@ html.theme-light #phoneRequestModal > div {
   color: #0f172a !important;
 }
 
+/* System Notification Toast */
+.toast-notification {
+  position: fixed;
+  top: 48px;
+  right: 24px;
+  z-index: 100;
+  transform: translateX(120%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+.toast-notification.show {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+

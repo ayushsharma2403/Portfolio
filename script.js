@@ -473,8 +473,7 @@
       clearTimeout(toastTimer);
       toastTimer = null;
     }
-    toast.classList.add('translate-x-96', 'opacity-0', 'pointer-events-none');
-    toast.classList.remove('translate-x-0', 'opacity-100', 'pointer-events-auto');
+    toast.classList.remove('show');
   };
 
   window.showToast = function (title, desc) {
@@ -486,14 +485,16 @@
     if (tTitle) tTitle.textContent = title;
     if (tDesc) tDesc.textContent = desc;
 
-    if (toastTimer) clearTimeout(toastTimer);
+    if (toastTimer) {
+      clearTimeout(toastTimer);
+      toastTimer = null;
+    }
 
-    toast.classList.remove('translate-x-96', 'opacity-0', 'pointer-events-none');
-    toast.classList.add('translate-x-0', 'opacity-100', 'pointer-events-auto');
+    toast.classList.add('show');
 
     toastTimer = setTimeout(() => {
       window.hideToast();
-    }, 4000);
+    }, 4500);
   };
 
   // Top Bar Dropdowns
