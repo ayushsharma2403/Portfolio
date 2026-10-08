@@ -493,6 +493,19 @@
   };
 
   // Toast System
+  let toastTimer = null;
+
+  window.hideToast = function () {
+    const toast = document.getElementById('toastNotification');
+    if (!toast) return;
+    if (toastTimer) {
+      clearTimeout(toastTimer);
+      toastTimer = null;
+    }
+    toast.classList.add('translate-x-96', 'opacity-0', 'pointer-events-none');
+    toast.classList.remove('translate-x-0', 'opacity-100', 'pointer-events-auto');
+  };
+
   window.showToast = function (title, desc) {
     const toast = document.getElementById('toastNotification');
     const tTitle = document.getElementById('toastTitle');
@@ -502,13 +515,14 @@
     if (tTitle) tTitle.textContent = title;
     if (tDesc) tDesc.textContent = desc;
 
-    toast.classList.remove('translate-x-96', 'opacity-0');
-    toast.classList.add('translate-x-0', 'opacity-100');
+    if (toastTimer) clearTimeout(toastTimer);
 
-    setTimeout(() => {
-      toast.classList.add('translate-x-96', 'opacity-0');
-      toast.classList.remove('translate-x-0', 'opacity-100');
-    }, 3200);
+    toast.classList.remove('translate-x-96', 'opacity-0', 'pointer-events-none');
+    toast.classList.add('translate-x-0', 'opacity-100', 'pointer-events-auto');
+
+    toastTimer = setTimeout(() => {
+      window.hideToast();
+    }, 4000);
   };
 
   // Top Bar Dropdowns
