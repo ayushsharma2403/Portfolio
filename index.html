@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Ayush Sharma | Spatial OS Portfolio</title>
   <meta name="description" content="Ayush Sharma - AI/ML Engineer & Systems Developer Portfolio Operating System. Built with Liquid Glass, VisionOS optics, dynamic WebGL shaders, interactive multi-window manager, and retro-futuristic terminal." />
+  <meta name="theme-color" content="#0f131c" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f131c'/><circle cx='16' cy='16' r='10' fill='%230A84FF'/><path d='M12 16l3 3 5-6' stroke='white' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>" />
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Ayush Sharma | Spatial OS Portfolio" />
+  <meta property="og:description" content="AI/ML Engineer & Systems Developer Portfolio. Explore production AI middleware, computer vision, and real-time systems." />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Ayush Sharma | Spatial OS Portfolio" />
+  <meta name="twitter:description" content="AI/ML Engineer & Systems Developer Portfolio. Explore production AI middleware, computer vision, and real-time systems." />
 
   <!-- Google Fonts: Space Grotesk, Geist, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -1327,12 +1339,15 @@
               <textarea id="senderMessage" required rows="4" placeholder="Write your message here..." class="glass-inset px-3 py-2 rounded-lg text-sm text-white placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary resize-none border border-white/10"></textarea>
             </div>
 
-            <div class="flex items-center justify-end gap-2 pt-2">
-              <button type="button" class="btn-ghost" onclick="closeWindow('contact')">Cancel</button>
-              <button type="submit" class="btn-primary" id="transmitBtn">
-                <span>Send Message</span>
-                <span class="material-symbols-outlined text-sm">send</span>
-              </button>
+            <div class="flex items-center justify-between gap-2 pt-2">
+              <span id="dispatchStatus" class="text-xs font-mono text-emerald-400"></span>
+              <div class="flex items-center gap-2">
+                <button type="button" class="btn-ghost" onclick="closeWindow('contact')">Cancel</button>
+                <button type="submit" class="btn-primary" id="transmitBtn">
+                  <span>Send Message</span>
+                  <span class="material-symbols-outlined text-sm">send</span>
+                </button>
+              </div>
             </div>
           </form>
         </div>

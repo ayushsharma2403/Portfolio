@@ -1,11 +1,18 @@
 {
-  "version": 2,
-  "name": "ayush-sharma-portfolio-os",
   "cleanUrls": true,
-  "routes": [
+  "headers": [
     {
-      "src": "/(.*)",
-      "dest": "/$1"
+      "source": "/(.*).pdf",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/pdf"
+        },
+        {
+          "key": "Content-Disposition",
+          "value": "inline"
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,21 @@
+# OS & IDE Files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Dependencies & Build Artefacts
+node_modules/
+package-lock.json
+dist/
+build/
+
+# Platform / Hosting metadata
+.vercel
+.netlify
+*.log
