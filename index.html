@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Ayush Sharma | Spatial OS Portfolio</title>
+  <meta name="description" content="Ayush Sharma - AI/ML Engineer & Systems Developer Portfolio Operating System. Built with Liquid Glass, VisionOS optics, dynamic WebGL shaders, interactive multi-window manager, and retro-futuristic terminal." />
+
+  <!-- Google Fonts: Space Grotesk, Geist, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            surface: '#0f131c',
+            'surface-container': '#1c2028',
+            'surface-container-high': '#262a33',
+            'surface-container-highest': '#31353e',
+            'surface-container-lowest': '#0a0e16',
+            'on-surface': '#dfe2ee',
+            'on-surface-variant': '#9aa2b5',
+            primary: '#0A84FF',
+            'primary-fixed': '#aac7ff',
+            secondary: '#5E5CE6',
+            tertiary: '#30D158'
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="theme-dark select-none overflow-hidden">
+
+  <!-- Interactive WebGL Fluid Caustics & Liquid Glass Background -->
+  <div class="fixed inset-0 w-full h-full pointer-events-none -z-10 overflow-hidden" id="shaderContainer">
+    <canvas id="shader-canvas" class="w-full h-full block"></canvas>
+    <div id="bgMeshOverlay" class="absolute inset-0 transition-colors duration-700 pointer-events-none"></div>
+  </div>
+
+  <!-- Ambient Cursor Aura Glow -->
+  <div id="cursorGlow" class="pointer-events-none fixed -translate-x-1/2 -translate-y-1/2 rounded-full w-[400px] h-[400px] blur-[100px] opacity-25 z-0 transition-opacity duration-300"></div>
+
+  <!-- ================= TOP SYSTEM MENU BAR ================= -->
+  <header id="systemMenuBar" class="fixed top-0 left-0 right-0 z-50 h-8 px-4 flex items-center justify-between text-xs tracking-tight transition-all duration-300">
+    <!-- Left: Apple/OS Symbol & Menu items -->
+    <div class="flex items-center gap-4">
+      <div class="relative group">
+        <button id="osLogoBtn" class="flex items-center gap-1.5 font-bold text-primary hover:opacity-80 transition-opacity cursor-pointer">
+          <span class="material-symbols-outlined text-base">terminal</span>
+          <span class="font-display tracking-wider font-semibold">AURA OS</span>
+          <span class="text-[9px] px-1 py-0.2 rounded font-mono bg-primary/20 text-primary border border-primary/30">v2.4</span>
+        </button>
+        <!-- Apple-like Dropdown Menu -->
+        <div id="osSystemDropdown" class="hidden absolute top-7 left-0 w-52 py-1.5 rounded-xl glass-elevated shadow-2xl border border-white/10 text-xs flex-col z-50 animate-pop">
+          <button class="px-3 py-1.5 text-left hover:bg-primary/20 flex items-center justify-between" onclick="openWindow('about'); hideDropdowns();">
+            <span>About Ayush Sharma</span> <span class="text-[10px] opacity-60">⌘I</span>
+          </button>
+          <button class="px-3 py-1.5 text-left hover:bg-primary/20 flex items-center justify-between" onclick="openWindow('settings'); hideDropdowns();">
+            <span>System Settings...</span> <span class="text-[10px] opacity-60">⌘,</span>
+          </button>
+          <div class="my-1 border-t border-white/10"></div>
+          <button class="px-3 py-1.5 text-left hover:bg-primary/20 flex items-center justify-between" onclick="openWindow('terminal'); hideDropdowns();">
+            <span>Terminal Shell</span> <span class="text-[10px] opacity-60">⌥T</span>
+          </button>
+          <button class="px-3 py-1.5 text-left hover:bg-primary/20 flex items-center justify-between" onclick="openWindow('projects'); hideDropdowns();">
+            <span>Project Explorer</span> <span class="text-[10px] opacity-60">⌥P</span>
+          </button>
+          <div class="my-1 border-t border-white/10"></div>
+          <button class="px-3 py-1.5 text-left hover:bg-primary/20 flex items-center justify-between text-tertiary" onclick="openWindow('contact'); hideDropdowns();">
+            <span>Quick Dispatch / Hire</span> <span class="text-[10px] opacity-60">⌘M</span>
+          </button>
+          <button class="px-3 py-1.5 text-left hover:bg-red-500/20 text-red-400 flex items-center justify-between" onclick="triggerRestart(); hideDropdowns();">
+            <span>Restart Aura OS</span> <span class="text-[10px] opacity-60">⌃R</span>
+          </button>
+        </div>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-1 text-[13px] font-sans">
+        <button class="menu-tab-btn" onclick="openWindow('about')">Profile</button>
+        <button class="menu-tab-btn" onclick="openWindow('projects')">Projects</button>
+        <button class="menu-tab-btn" onclick="openWindow('experience')">Experience</button>
+        <button class="menu-tab-btn" onclick="openWindow('skills')">Skills Matrix</button>
+        <button class="menu-tab-btn" onclick="openWindow('certifications')">Credentials</button>
+        <button class="menu-tab-btn" onclick="openWindow('terminal')">Terminal</button>
+      </nav>
+    </div>
+
+    <!-- Right: Telemetry Controls & Live Clock -->
+    <div class="flex items-center gap-3 font-mono text-[11px]">
+      <div class="hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container/60 border border-white/5">
+        <span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+        <span class="text-tertiary font-medium">OPEN FOR ROLES</span>
+      </div>
+
+      <div class="hidden md:flex items-center gap-1 text-on-surface-variant">
+        <span class="material-symbols-outlined text-[13px]">location_on</span>
+        <span>New Delhi, IN</span>
+      </div>
+
+      <div class="flex items-center gap-1 text-on-surface-variant">
+        <span class="material-symbols-outlined text-[13px] text-tertiary">bolt</span>
+        <span>99%</span>
+      </div>
+
+      <!-- Theme Switcher -->
+      <button id="themeToggleBtn" class="p-1 rounded-md hover:bg-white/10 transition-colors flex items-center justify-center text-primary" title="Toggle Light / Dark Mode">
+        <span class="material-symbols-outlined text-[15px]" id="themeToggleIcon">dark_mode</span>
+      </button>
+
+      <!-- Audio Ambience Toggle -->
+      <button id="soundFxBtn" class="p-1 rounded-md hover:bg-white/10 transition-colors flex items-center justify-center text-on-surface-variant hover:text-primary" title="Toggle Spatial Audio Effects">
+        <span class="material-symbols-outlined text-[15px]" id="soundFxIcon">volume_up</span>
+      </button>
+
+      <!-- Live Clock & Date -->
+      <div id="topBarClock" class="px-2 py-0.5 rounded bg-white/5 font-mono text-on-surface font-semibold tracking-wider">
+        --:--:--
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= DESKTOP WORKSPACE ================= -->
+  <main id="desktopWorkspace" class="w-full h-full relative overflow-hidden pt-8 pb-20">
+    
+    <!-- DESKTOP ICONS (GRID on Top-Right/Left like MacOS/visionOS) -->
+    <div id="desktopIconGrid" class="absolute top-12 left-6 z-10 flex flex-col gap-5 pointer-events-auto">
+      <div class="desktop-shortcut" onclick="openWindow('about')" title="Double click or click to open">
+        <div class="icon-bubble glass-base">
+          <span class="material-symbols-outlined text-2xl text-primary">person</span>
+        </div>
+        <span class="shortcut-label">Ayush.bio</span>
+      </div>
+
+      <div class="desktop-shortcut" onclick="openWindow('projects')">
+        <div class="icon-bubble glass-base">
+          <span class="material-symbols-outlined text-2xl text-secondary">deployed_code</span>
+        </div>
+        <span class="shortcut-label">Projects</span>
+      </div>
+
+      <div class="desktop-shortcut" onclick="openWindow('terminal')">
+        <div class="icon-bubble glass-base">
+          <span class="material-symbols-outlined text-2xl text-emerald-400">terminal</span>
+        </div>
+        <span class="shortcut-label">Terminal</span>
+      </div>
+
+      <div class="desktop-shortcut" onclick="openWindow('skills')">
+        <div class="icon-bubble glass-base">
+          <span class="material-symbols-outlined text-2xl text-amber-400">cpu</span>
+        </div>
+        <span class="shortcut-label">Tech Stack</span>
+      </div>
+
+      <div class="desktop-shortcut" onclick="openWindow('resume')">
+        <div class="icon-bubble glass-base">
+          <span class="material-symbols-outlined text-2xl text-rose-400">description</span>
+        </div>
+        <span class="shortcut-label">Resume.pdf</span>
+      </div>
+    </div>
+
+    <!-- DESKTOP WIDGET: Spatial Holographic Clock & Weather (Top Right) -->
+    <div id="desktopWidgetClock" class="hidden lg:flex absolute top-12 right-8 z-10 w-80 glass-elevated rounded-2xl p-5 flex-col gap-3 border border-white/10 shadow-2xl select-none animate-fade-in pointer-events-auto">
+      <div class="flex items-center justify-between border-b border-white/10 pb-2">
+        <div class="flex items-center gap-1.5 text-xs font-mono text-on-surface-variant uppercase tracking-wider">
+          <span class="material-symbols-outlined text-sm text-primary">schedule</span>
+          <span>DATE &amp; TELEMETRY</span>
+        </div>
+        <div class="flex items-center gap-1.5 text-[10px] text-tertiary font-mono">
+          <span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-ping"></span>
+          <span>ONLINE</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col items-center justify-center py-2">
+        <div id="widgetLargeClock" class="font-display text-5xl font-extralight tracking-tight text-white drop-shadow-md">
+          14:24:21
+        </div>
+        <div class="flex items-center gap-2 mt-2 text-sm text-on-surface font-sans">
+          <span id="widgetDateString">Thu, 8 Oct</span>
+          <span class="w-1 h-1 rounded-full bg-primary"></span>
+          <span class="text-primary font-mono font-medium">30°C New Delhi</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 pt-2 border-t border-white/10 text-xs font-mono text-on-surface-variant">
+        <div class="bg-surface-container/60 p-2 rounded-lg flex flex-col">
+          <span class="text-[10px] opacity-70">STATUS</span>
+          <span class="text-tertiary font-semibold">Available</span>
+        </div>
+        <div class="bg-surface-container/60 p-2 rounded-lg flex flex-col">
+          <span class="text-[10px] opacity-70">SPECIALIZATION</span>
+          <span class="text-primary font-semibold">AI / Backend</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= FLOATING / TILED WINDOW CONTAINER ================= -->
+    <div id="windowManagerStage" class="w-full h-full relative pointer-events-none">
+
+      <!-- ================= 1. ABOUT / PROFILE WINDOW ================= -->
+      <div id="win-about" class="os-window glass-elevated rounded-2xl shadow-2xl flex flex-col pointer-events-auto animate-window-open" data-window="about" style="width: 780px; height: 560px; top: 70px; left: 160px; z-index: 20;">
+        <div class="window-titlebar h-10 px-3.5 flex items-center justify-between border-b border-white/10 cursor-move select-none">
+          <div class="flex items-center gap-2">
+            <div class="window-controls flex items-center gap-1.5">
+              <button class="win-btn win-close bg-[#FF5F56]" onclick="closeWindow('about')" title="Close"></button>
+              <button class="win-btn win-min bg-[#FFBD2E]" onclick="minimizeWindow('about')" title="Minimize"></button>
+              <button class="win-btn win-max bg-[#27C93F]" onclick="maximizeWindow('about')" title="Maximize"></button>
+            </div>
+            <div class="ml-3 flex items-center gap-1.5 text-xs font-mono text-on-surface">
+              <span class="material-symbols-outlined text-sm text-primary">person</span>
+              <span class="font-semibold">Ayush_Sharma.profile</span>
+            </div>
+          </div>
+          <div class="text-[11px] font-mono text-on-surface-variant flex items-center gap-2">
+            <span class="px-1.5 py-0.5 rounded bg-primary/10 text-primary border border-primary/20">B.Tech CSE (AI) '26</span>
+          </div>
+        </div>
+
+        <div class="window-body flex-1 overflow-y-auto p-6 flex flex-col gap-6 custom-scrollbar text-on-surface">
+          <!-- Hero Profile Card -->
+          <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 bg-surface-container/60 p-5 rounded-xl border border-white/10 relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 w-44 h-44 rounded-full bg-primary/10 blur-3xl pointer-events-none"></div>
+            
+            <!-- Avatar with dynamic rim lighting -->
+            <div class="relative flex-shrink-0">
+              <div class="w-28 h-28 rounded-2xl overflow-hidden glass-inset border-2 border-primary/30 shadow-xl relative group">
+                <!-- High-res stylized dev avatar representation -->
+                <div class="w-full h-full bg-gradient-to-tr from-[#0b1329] via-[#1d2d50] to-[#133b5c] flex flex-col items-center justify-center text-primary relative">
+                  <span class="font-display font-bold text-4xl tracking-tighter text-white">AS</span>
+                  <span class="text-[10px] font-mono tracking-widest text-primary-fixed mt-1">AI // DEV</span>
+                  <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span class="material-symbols-outlined text-white text-3xl">smart_toy</span>
+                  </div>
+                </div>
+              </div>
+              <div class="absolute -bottom-2 -right-1 bg-surface-container-lowest px-2 py-0.5 rounded-full flex items-center gap-1 border border-tertiary/50 shadow-md">
+                <span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+                <span class="font-mono text-[9px] text-tertiary font-bold">ONLINE</span>
+              </div>
+            </div>
+
+            <!-- Profile Info -->
+            <div class="flex flex-col gap-2 text-center sm:text-left flex-1">
+              <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                <span class="badge-pill bg-primary/15 text-primary border border-primary/30">AI &amp; Backend Engineer</span>
+                <span class="badge-pill bg-secondary/15 text-secondary border border-secondary/30">LLMs &amp; System Design</span>
+                <span class="badge-pill bg-tertiary/15 text-tertiary border border-tertiary/30">FastAPI &amp; Python</span>
+              </div>
+              <h1 class="font-display text-3xl font-bold tracking-tight text-white mt-1">Ayush Sharma</h1>
+              <p class="text-sm text-on-surface-variant font-sans leading-relaxed">
+                Computer Science Engineering (AI) student at AKTU passionate about engineering resilient AI-powered platforms, high-throughput backend APIs, and privacy-first distributed architectures. Experienced in building multi-provider LLM routing middleware, real-time WebSocket meshes, and computer vision systems.
+              </p>
+              
+              <div class="flex flex-wrap items-center justify-center sm:justify-start gap-4 pt-2 text-xs font-mono text-on-surface-variant">
+                <a href="mailto:ayush240304@gmail.com" class="flex items-center gap-1 hover:text-primary transition-colors">
+                  <span class="material-symbols-outlined text-sm">mail</span> ayush240304@gmail.com
+                </a>
+                <span class="flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">call</span> +91-8506943880
+                </span>
+                <span class="flex items-center gap-1">
+                  <span class="material-symbols-outlined text-sm">school</span> AKTU (2022 - 2026)
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Metrics Bento Grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="stat-card glass-inset">
+              <span class="stat-label">LLM INTEGRATIONS</span>
+              <span class="stat-value text-primary">3+ Providers</span>
+              <span class="stat-sub">Claude, OpenAI, Gemini</span>
+            </div>
+            <div class="stat-card glass-inset">
+              <span class="stat-label">BACKEND ARCHITECTURE</span>
+              <span class="stat-value text-secondary">FastAPI &amp; Node</span>
+              <span class="stat-sub">WebSockets &amp; REST</span>
+            </div>
+            <div class="stat-card glass-inset">
+              <span class="stat-label">SECURITY &amp; PRIVACY</span>
+              <span class="stat-value text-tertiary">E2EE &amp; JWT</span>
+              <span class="stat-sub">P2P Mesh + OAuth</span>
+            </div>
+            <div class="stat-card glass-inset">
+              <span class="stat-label">EDUCATION CGPA</span>
+              <span class="stat-value text-primary">B.Tech CSE (AI)</span>
+              <span class="stat-sub">AKTU Graduating 2026</span>
+            </div>
+          </div>
+
+          <!-- Professional Philosophy & Core Focus -->
+          <div class="glass-inset p-5 rounded-xl flex flex-col gap-3">
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-primary font-bold flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-sm">psychology</span> ENGINEERING PHILOSOPHY
+              </span>
+              <span class="text-on-surface-variant">DATA-DRIVEN • SECURE • COST-OPTIMIZED</span>
+            </div>
+            <p class="text-sm text-on-surface-variant font-sans leading-relaxed">
+              I believe in building software that delivers tangible, low-latency utility. Whether optimizing token usage and API budgets for enterprise LLM proxies or architecting offline peer-to-peer WebSocket mesh networks for resilient communications, I prioritize mathematical rigor, security standards, and production readiness.
+            </p>
+          </div>
+
+          <!-- Action Bar -->
+          <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+            <div class="flex items-center gap-2">
+              <button class="btn-primary" onclick="openWindow('contact')">
+                <span class="material-symbols-outlined text-sm">send</span> Contact Developer
+              </button>
+              <button class="btn-secondary" onclick="openWindow('resume')">
+                <span class="material-symbols-outlined text-sm">description</span> View Resume
+              </button>
+            </div>
+            <div class="flex items-center gap-2">
+              <a href="https://github.com/ayushsharma2403" target="_blank" rel="noopener noreferrer" class="btn-ghost" title="GitHub Profile">
+                <span class="font-mono text-xs">github.com/ayushsharma2403 ↗</span>
+              </a>
+              <a href="https://www.linkedin.com/in/ayush-sharma-47b60a370/" target="_blank" rel="noopener noreferrer" class="btn-ghost" title="LinkedIn Profile">
+                <span class="font-mono text-xs">LinkedIn ↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= 2. PROJECTS WINDOW ================= -->
+      <div id="win-projects" class="os-window glass-elevated rounded-2xl shadow-2xl flex flex-col pointer-events-auto" data-window="projects" style="width: 820px; height: 580px; top: 90px; left: 220px; z-index: 15; display: none;">
+        <div class="window-titlebar h-10 px-3.5 flex items-center justify-between border-b border-white/10 cursor-move select-none">
+          <div class="flex items-center gap-2">
+            <div class="window-controls flex items-center gap-1.5">
+              <button class="win-btn win-close bg-[#FF5F56]" onclick="closeWindow('projects')" title="Close"></button>
+              <button class="win-btn win-min bg-[#FFBD2E]" onclick="minimizeWindow('projects')" title="Minimize"></button>
+              <button class="win-btn win-max bg-[#27C93F]" onclick="maximizeWindow('projects')" title="Maximize"></button>
+            </div>
+            <div class="ml-3 flex items-center gap-1.5 text-xs font-mono text-on-surface">
+              <span class="material-symbols-outlined text-sm text-secondary">deployed_code</span>
+              <span class="font-semibold">Shipped_Production_Projects.app</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-1 text-[11px] font-mono text-on-surface-variant">
+            <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10">3 Primary Projects</span>
+          </div>
+        </div>
+
+        <div class="window-body flex-1 overflow-y-auto p-6 flex flex-col gap-6 custom-scrollbar">
+          
+          <!-- PROJECT 1: TokenBridge -->
+          <div class="project-card glass-inset p-5 rounded-2xl flex flex-col gap-3 group relative overflow-hidden border border-white/10 hover:border-primary/50 transition-all">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/5 pb-3">
+              <div class="flex items-center gap-2.5">
+                <div class="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center text-primary border border-primary/30">
+                  <span class="material-symbols-outlined text-xl">token</span>
+                </div>
+                <div>
+                  <h3 class="font-display text-lg font-bold text-white group-hover:text-primary transition-colors">
+                    TokenBridge – Token-Efficient AI Proxy Middleware
+                  </h3>
+                  <span class="text-xs font-mono text-on-surface-variant">Personal Project • Python &amp; FastAPI Architecture</span>
+                </div>
+              </div>
+              <span class="badge-pill bg-primary/20 text-primary self-start sm:self-auto">LLM Proxy &amp; Routing</span>
+            </div>
+
+            <p class="text-sm text-on-surface-variant leading-relaxed">
+              Designed and developed a multi-provider LLM routing platform (Claude, OpenAI, Gemini) with a Bring-Your-Own-Key (BYOK) model, enabling users to seamlessly route AI requests through a single unified backend with robust budget and usage oversight.
+            </p>
+
+            <ul class="text-xs text-on-surface-variant space-y-1.5 list-disc pl-4 font-sans">
+              <li><strong class="text-white">Context Compression:</strong> Implemented prompt optimization and context truncation techniques that sharply reduce token usage and API costs across providers.</li>
+              <li><strong class="text-white">Unified Authentication:</strong> Built enterprise-grade authentication using JWT, OAuth, and Firebase, accompanied by a styled responsive chat interface.</li>
+              <li><strong class="text-white">Stack:</strong> Python, FastAPI, MySQL, JWT/OAuth, Firebase, JavaScript, REST APIs.</li>
+            </ul>
+
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-white/5">
+              <div class="flex flex-wrap gap-1.5 font-mono text-[11px]">
+                <span class="tech-chip">FastAPI</span>
+                <span class="tech-chip">Python</span>
+                <span class="tech-chip">Multi-LLM</span>
+                <span class="tech-chip">MySQL</span>
+                <span class="tech-chip">JWT</span>
+              </div>
+              <a href="https://github.com/ayushsharma2403" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-primary hover:underline flex items-center gap-1">
+                View Source Repository <span class="material-symbols-outlined text-xs">arrow_outward</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- PROJECT 2: MistRoom -->
+          <div class="project-card glass-inset p-5 rounded-2xl flex flex-col gap-3 group relative overflow-hidden border border-white/10 hover:border-secondary/50 transition-all">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/5 pb-3">
+              <div class="flex items-center gap-2.5">
+                <div class="w-10 h-10 rounded-xl bg-secondary/20 flex items-center justify-center text-secondary border border-secondary/30">
+                  <span class="material-symbols-outlined text-xl">lock_open_right</span>
+                </div>
+                <div>
+                  <h3 class="font-display text-lg font-bold text-white group-hover:text-secondary transition-colors">
+                    MistRoom – Privacy-First Anonymous Chat Application
+                  </h3>
+                  <span class="text-xs font-mono text-on-surface-variant">Personal Project • Distributed Real-Time Systems</span>
+                </div>
+              </div>
+              <span class="badge-pill bg-secondary/20 text-secondary self-start sm:self-auto">E2EE &amp; Mesh Network</span>
+            </div>
+
+            <p class="text-sm text-on-surface-variant leading-relaxed">
+              Architected a zero-knowledge anonymous messaging platform over WebSockets featuring client-side End-to-End Encryption (E2EE) and a strict zero-logging protocol ensuring messages are mathematically unreadable by servers and never stored.
+            </p>
+
+            <ul class="text-xs text-on-surface-variant space-y-1.5 list-disc pl-4 font-sans">
+              <li><strong class="text-white">Offline P2P Mesh Mode:</strong> Designed a fallback peer-to-peer mesh networking capability allowing localized devices to exchange direct encrypted packets without centralized servers.</li>
+              <li><strong class="text-white">Dockerized Infrastructure:</strong> Containerized full microservices via Docker Compose with MySQL persistence layer and modular system architecture.</li>
+              <li><strong class="text-white">Stack:</strong> Node.js, WebSockets, End-to-End Encryption, MySQL, Docker, Docker Compose.</li>
+            </ul>
+
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-white/5">
+              <div class="flex flex-wrap gap-1.5 font-mono text-[11px]">
+                <span class="tech-chip">Node.js</span>
+                <span class="tech-chip">WebSockets</span>
+                <span class="tech-chip">E2EE Cryptography</span>
+                <span class="tech-chip">Docker</span>
+                <span class="tech-chip">P2P Mesh</span>
+              </div>
+              <a href="https://github.com/ayushsharma2403" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-secondary hover:underline flex items-center gap-1">
+                View Source Repository <span class="material-symbols-outlined text-xs">arrow_outward</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- PROJECT 3: FaceTrackAI -->
+          <div class="project-card glass-inset p-5 rounded-2xl flex flex-col gap-3 group relative overflow-hidden border border-white/10 hover:border-tertiary/50 transition-all">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/5 pb-3">
+              <div class="flex items-center gap-2.5">
+                <div class="w-10 h-10 rounded-xl bg-tertiary/20 flex items-center justify-center text-tertiary border border-tertiary/30">
+                  <span class="material-symbols-outlined text-xl">face</span>
+                </div>
+                <div>
+                  <h3 class="font-display text-lg font-bold text-white group-hover:text-tertiary transition-colors">
+                    FaceTrackAI – Real-Time Face Tracking &amp; Recognition System
+                  </h3>
+                  <span class="text-xs font-mono text-on-surface-variant">Academic Project • Computer Vision &amp; Deep Learning</span>
+                </div>
+              </div>
+              <span class="badge-pill bg-tertiary/20 text-tertiary self-start sm:self-auto">Computer Vision</span>
+            </div>
+
+            <p class="text-sm text-on-surface-variant leading-relaxed">
+              Engineered a high-throughput automated biometric attendance system executing real-time facial landmark detection, vector embedding comparison, and automated logging via OpenCV.
+            </p>
+
+            <ul class="text-xs text-on-surface-variant space-y-1.5 list-disc pl-4 font-sans">
+              <li><strong class="text-white">Low-Latency Video Pipeline:</strong> Implemented frame-by-frame optimization in Python and OpenCV capable of recognizing multi-subject concurrent streams.</li>
+              <li><strong class="text-white">Web-Based Management:</strong> Built a Flask web interface for instant enrollment, model weight retraining, and exportable analytics sheets.</li>
+              <li><strong class="text-white">Stack:</strong> Python, OpenCV, Flask, Machine Learning, Computer Vision, SQLite.</li>
+            </ul>
+
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-white/5">
+              <div class="flex flex-wrap gap-1.5 font-mono text-[11px]">
+                <span class="tech-chip">Python</span>
+                <span class="tech-chip">OpenCV</span>
+                <span class="tech-chip">Flask</span>
+                <span class="tech-chip">Computer Vision</span>
+                <span class="tech-chip">Biometrics</span>
+              </div>
+              <a href="https://github.com/ayushsharma2403" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-tertiary hover:underline flex items-center gap-1">
+                View Source Repository <span class="material-symbols-outlined text-xs">arrow_outward</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ================= 3. TERMINAL WINDOW (RETRO CYBERPUNK CLI) ================= -->
+      <div id="win-terminal" class="os-window glass-elevated rounded-2xl shadow-2xl flex flex-col pointer-events-auto" data-window="terminal" style="width: 760px; height: 500px; top: 120px; left: 280px; z-index: 18; display: none;">
+        <div class="window-titlebar h-10 px-3.5 flex items-center justify-between border-b border-white/10 cursor-move select-none bg-[#050914]/90">
+          <div class="flex items-center gap-2">
+            <div class="window-controls flex items-center gap-1.5">
+              <button class="win-btn win-close bg-[#FF5F56]" onclick="closeWindow('terminal')" title="Close"></button>
+              <button class="win-btn win-min bg-[#FFBD2E]" onclick="minimizeWindow('terminal')" title="Minimize"></button>
+              <button class="win-btn win-max bg-[#27C93F]" onclick="maximizeWindow('terminal')" title="Maximize"></button>
+            </div>
+            <div class="ml-3 flex items-center gap-1.5 text-xs font-mono text-emerald-400">
+              <span class="material-symbols-outlined text-sm">terminal</span>
+              <span class="font-semibold">ayush@aura-os: ~ (zsh)</span>
+            </div>
+          </div>
+          <div class="text-[11px] font-mono text-on-surface-variant flex items-center gap-2">
+            <span>pty/3 • x86_64</span>
+          </div>
+        </div>
+
+        <div class="terminal-body flex-1 bg-[#050811]/95 p-4 font-mono text-xs overflow-y-auto flex flex-col gap-2 text-emerald-300 custom-scrollbar select-text" id="terminalOutput">
+          <div class="text-on-surface-variant leading-relaxed">
+            <div>Aura Interactive Terminal Kernel v2.4.0 (x86_64-pc-none)</div>
+            <div>Type <span class="text-primary font-bold">help</span> to list available commands or try <span class="text-tertiary font-bold">skills</span>, <span class="text-secondary font-bold">projects</span>, <span class="text-amber-300 font-bold">contact</span>, <span class="text-white font-bold">bio</span>.</div>
+            <div class="text-[11px] opacity-70">Hint: Try 'cat resume', 'fetch', 'clear', or 'theme'.</div>
+          </div>
+          <div id="terminalHistory" class="flex flex-col gap-2"></div>
+          <div class="flex items-center gap-2 text-emerald-400 pt-1" id="terminalPromptLine">
+            <span class="text-primary">ayush@aura-os</span><span class="text-white">:</span><span class="text-secondary">~</span><span class="text-emerald-400">$</span>
+            <input type="text" id="terminalInput" class="flex-1 bg-transparent border-none outline-none text-emerald-200 font-mono text-xs caret-emerald-400" autofocus autocomplete="off" spellcheck="false" />
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= 4. TECHNICAL SKILLS MATRIX WINDOW ================= -->
+      <div id="win-skills" class="os-window glass-elevated rounded-2xl shadow-2xl flex flex-col pointer-events-auto" data-window="skills" style="width: 750px; height: 530px; top: 100px; left: 250px; z-index: 12; display: none;">
+        <div class="window-titlebar h-10 px-3.5 flex items-center justify-between border-b border-white/10 cursor-move select-none">
+          <div class="flex items-center gap-2">
+            <div class="window-controls flex items-center gap-1.5">
+              <button class="win-btn win-close bg-[#FF5F56]" onclick="closeWindow('skills')" title="Close"></button>
+              <button class="win-btn win-min bg-[#FFBD2E]" onclick="minimizeWindow('skills')" title="Minimize"></button>
+              <button class="win-btn win-max bg-[#27C93F]" onclick="maximizeWindow('skills')" title="Maximize"></button>
+            </div>
+            <div class="ml-3 flex items-center gap-1.5 text-xs font-mono text-on-surface">
+              <span class="material-symbols-outlined text-sm text-amber-400">cpu</span>
+              <span class="font-semibold">Technical_Stack_Matrix.cfg</span>
+            </div>
+          </div>
+          <div class="text-[11px] font-mono text-on-surface-variant">Telemetry Active</div>
+        </div>
+
+        <div class="window-body flex-1 overflow-y-auto p-6 flex flex-col gap-5 custom-scrollbar text-on-surface">
+          <div class="flex items-center justify-between border-b border-white/10 pb-3">
+            <div>
+              <h2 class="font-display text-xl font-bold text-white">Full Stack &amp; Machine Learning Competencies</h2>
+              <p class="text-xs text-on-surface-variant">Validated through production projects, academic implementations, and internships.</p>
+            </div>
+            <span class="badge-pill bg-amber-400/20 text-amber-300">Verified Skills</span>
+          </div>
+
+          <!-- Category 1: Languages -->
+          <div class="skill-category glass-inset p-4 rounded-xl flex flex-col gap-2">
+            <div class="flex items-center justify-between text-xs font-mono text-primary font-semibold">
+              <span class="flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-sm">code</span> PROGRAMMING LANGUAGES
+              </span>
+              <span>Primary Tooling</span>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+              <div class="skill-pill">
+                <span class="font-bold text-white">Python</span>
+                <span class="text-[10px] text-tertiary">Advanced • AI / APIs</span>
+              </div>
+              <div class="skill-pill">
+                <span class="font-bold text-white">SQL</span>
+                <span class="text-[10px] text-primary">Queries &amp; Opt</span>
+              </div>
+              <div class="skill-pill">
+                <span class="font-bold text-white">C++</span>
+                <span class="text-[10px] text-secondary">DSA &amp; Algos</span>
+              </div>
+              <div class="skill-pill">
+                <span class="font-bold text-white">C</span>
+                <span class="text-[10px] text-on-surface-variant">Systems &amp; Memory</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category 2: Machine Learning & Deep Learning -->
+          <div class="skill-category glass-inset p-4 rounded-xl flex flex-col gap-2">
+            <div class="flex items-center justify-between text-xs font-mono text-secondary font-semibold">
+              <span class="flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-sm">neurology</span> MACHINE LEARNING &amp; DEEP LEARNING
+              </span>
+              <span>Model Architecture</span>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1 text-xs font-mono">
+              <div class="p-2.5 rounded-lg bg-surface-container/60 border border-white/5 flex flex-col gap-1">
+                <span class="text-white font-medium">TensorFlow</span>
+                <span class="text-[10px] text-on-surface-variant font-sans">CNNs, Neural Networks, Model Training</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-surface-container/60 border border-white/5 flex flex-col gap-1">
+                <span class="text-white font-medium">Scikit-learn</span>
+                <span class="text-[10px] text-on-surface-variant font-sans">Supervised Learning, Regressions, Evaluation</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-surface-container/60 border border-white/5 flex flex-col gap-1">
+                <span class="text-white font-medium">NumPy &amp; Pandas</span>
+                <span class="text-[10px] text-on-surface-variant font-sans">Data Preprocessing &amp; Feature Pipelines</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-surface-container/60 border border-white/5 flex flex-col gap-1">
+                <span class="text-white font-medium">OpenCV</span>
+                <span class="text-[10px] text-on-surface-variant font-sans">Facial Tracking &amp; Computer Vision</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-surface-container/60 border border-white/5 flex flex-col gap-1">
+                <span class="text-white font-medium">LLM Engineering</span>
+                <span class="text-[10px] text-on-surface-variant font-sans">Prompt Optimization, BYOK, Multi-agent</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-surface-container/60 border border-white/5 flex flex-col gap-1">
+                <span class="text-white font-medium">Matplotlib &amp; Seaborn</span>
+                <span class="text-[10px] text-on-surface-variant font-sans">Exploratory Data Analysis (EDA)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category 3: Web, Backend & Infrastructure -->
+          <div class="skill-category glass-inset p-4 rounded-xl flex flex-col gap-2">
+            <div class="flex items-center justify-between text-xs font-mono text-tertiary font-semibold">
+              <span class="flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-sm">cloud</span> BACKEND, APIS &amp; DEVOPS
+              </span>
+              <span>Reliability &amp; Scale</span>
+            </div>
+            <div class="flex flex-wrap gap-2 pt-1 font-mono text-xs">
+              <span class="tech-chip">FastAPI</span>
+              <span class="tech-chip">REST APIs</span>
+              <span class="tech-chip">WebSockets</span>
+              <span class="tech-chip">MySQL</span>
+              <span class="tech-chip">Docker &amp; Docker Compose</span>
+              <span class="tech-chip">JWT &amp; OAuth</span>
+              <span class="tech-chip">Firebase</span>
+              <span class="tech-chip">Git &amp; GitHub</span>
+              <span class="tech-chip">VS Code</span>
+              <span class="tech-chip">Jupyter Notebook</span>
+              <span class="tech-chip">AI-assisted Dev (Claude)</span>
+            </div>
+          </div>
+
+          <!-- Soft Skills -->
+          <div class="glass-inset p-3.5 rounded-xl flex items-center justify-between text-xs font-mono text-on-surface-variant">
+            <span>SOFT SKILLS:</span>
+            <span class="text-white">Analytical Thinking • Communication • Team Collaboration • Quick Learner</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= 5. EXPERIENCE WINDOW ================= -->
+      <div id="win-experience" class="os-window glass-elevated rounded-2xl shadow-2xl flex flex-col pointer-events-auto" data-window="experience" style="width: 720px; height: 500px; top: 110px; left: 240px; z-index: 14; display: none;">
+        <div class="window-titlebar h-10 px-3.5 flex items-center justify-between border-b border-white/10 cursor-move select-none">
+          <div class="flex items-center gap-2">
+            <div class="window-controls flex items-center gap-1.5">
+              <button class="win-btn win-close bg-[#FF5F56]" onclick="closeWindow('experience')" title="Close"></button>
+              <button class="win-btn win-min bg-[#FFBD2E]" onclick="minimizeWindow('experience')" title="Minimize"></button>
+              <button class="win-btn win-max bg-[#27C93F]" onclick="maximizeWindow('experience')" title="Maximize"></button>
+            </div>
+            <div class="ml-3 flex items-center gap-1.5 text-xs font-mono text-on-surface">
+              <span class="material-symbols-outlined text-sm text-primary">work</span>
+              <span class="font-semibold">Work_Experience_Log.log</span>
+            </div>
+          </div>
+          <div class="text-[11px] font-mono text-on-surface-variant">Chronological Dossier</div>
+        </div>
+
+        <div class="window-body flex-1 overflow-y-auto p-6 flex flex-col gap-6 custom-scrollbar text-on-surface">
+          <div>
+            <h2 class="font-display text-xl font-bold text-white">Professional Engineering Experience</h2>
+            <p class="text-xs text-on-surface-variant">Hands-on industry internship and technical database operations.</p>
+          </div>
+
+          <!-- Timeline item: Merlin Creations -->
+          <div class="relative pl-6 border-l-2 border-primary/40 flex flex-col gap-3">
+            <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-surface-container border-2 border-primary flex items-center justify-center">
+              <div class="w-1.5 h-1.5 rounded-full bg-primary"></div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+              <div>
+                <h3 class="font-display text-base font-bold text-white">Database Management Intern</h3>
+                <span class="text-sm font-semibold text-primary">Merlin Creations Pvt. Ltd.</span>
+              </div>
+              <div class="flex items-center gap-2 font-mono text-xs text-on-surface-variant">
+                <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10">July 2025 – Aug 2025</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 font-mono text-xs text-on-surface-variant">
+              <span class="tech-chip">MySQL</span>
+              <span class="tech-chip">SQL Performance Tuning</span>
+              <span class="tech-chip">Backup &amp; Recovery</span>
+            </div>
+
+            <ul class="text-sm text-on-surface-variant space-y-2 list-disc pl-4 font-sans leading-relaxed">
+              <li>Designed, developed, and maintained robust MySQL databases, ensuring efficient relational schema architecture and data storage consistency.</li>
+              <li>Wrote and optimized complex SQL queries with indexing strategies, directly improving database query execution speed and application throughput.</li>
+              <li>Executed comprehensive database import/export, automated backup scripts, and rapid recovery operations, ensuring high availability and zero operational data loss.</li>
+            </ul>
+          </div>
+
+          <!-- Education Section -->
+          <div class="glass-inset p-5 rounded-xl flex flex-col gap-3 border border-white/10">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-secondary">school</span>
+                <h3 class="font-display text-base font-bold text-white">Bachelor of Technology (B.Tech)</h3>
+              </div>
+              <span class="text-xs font-mono text-secondary">June 2022 – July 2026</span>
+            </div>
+            <div class="text-sm text-white font-medium">
+              Dr. A.P.J. Abdul Kalam Technical University (AKTU)
+            </div>
+            <div class="text-xs text-primary font-mono">
+              Major: Computer Science Engineering &amp; Artificial Intelligence
+            </div>
+            <p class="text-xs text-on-surface-variant leading-relaxed">
+              <strong>Relevant Coursework:</strong> Artificial Intelligence, Machine Learning, Data Structures &amp; Algorithms, Database Management Systems (DBMS), Computer Vision, Software Engineering.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= 6. CERTIFICATIONS WINDOW ================= -->
+      <div id="win-certifications" class="os-window glass-elevated rounded-2xl shadow-2xl flex flex-col pointer-events-auto" data-window="certifications" style="width: 740px; height: 520px; top: 115px; left: 260px; z-index: 13; display: none;">
+        <div class="window-titlebar h-10 px-3.5 flex items-center justify-between border-b border-white/10 cursor-move select-none">
+          <div class="flex items-center gap-2">
+            <div class="window-controls flex items-center gap-1.5">
+              <button class="win-btn win-close bg-[#FF5F56]" onclick="closeWindow('certifications')" title="Close"></button>
+              <button class="win-btn win-min bg-[#FFBD2E]" onclick="minimizeWindow('certifications')" title="Minimize"></button>
+              <button class="win-btn win-max bg-[#27C93F]" onclick="maximizeWindow('certifications')" title="Maximize"></button>
+            </div>
+            <div class="ml-3 flex items-center gap-1.5 text-xs font-mono text-on-surface">
+              <span class="material-symbols-outlined text-sm text-secondary">verified</span>
+              <span class="font-semibold">Verified_Credentials_Audit.sig</span>
+            </div>
+          </div>
+          <div class="text-[11px] font-mono text-tertiary flex items-center gap-1">
+            <span class="material-symbols-outlined text-xs">shield_check</span> Verified Signatures
+          </div>
+        </div>
+
+        <div class="window-body flex-1 overflow-y-auto p-6 flex flex-col gap-4 custom-scrollbar text-on-surface">
+          <div>
+            <h2 class="font-display text-xl font-bold text-white">Accreditations &amp; Certifications</h2>
+            <p class="text-xs text-on-surface-variant">Validated simulations and certified industry programs in AI, Security, and Analytics.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <!-- Cert 1 -->
+            <div class="cert-card glass-inset p-4 rounded-xl flex flex-col justify-between gap-3 border border-white/10 hover:border-primary/40 transition-all">
+              <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center text-primary flex-shrink-0">
+                  <span class="material-symbols-outlined text-2xl">school</span>
+                </div>
+                <div>
+                  <h4 class="font-display text-sm font-bold text-white">IBM SkillsBuild in Advanced IT Skills</h4>
+                  <div class="text-xs font-mono text-primary">Certificate Course on Artificial Intelligence</div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-2 border-t border-white/5 text-[11px] font-mono text-on-surface-variant">
+                <span>Grade A+ • ICT Academy</span>
+                <span class="text-tertiary font-bold">Feb 2026</span>
+              </div>
+            </div>
+
+            <!-- Cert 2 -->
+            <div class="cert-card glass-inset p-4 rounded-xl flex flex-col justify-between gap-3 border border-white/10 hover:border-secondary/40 transition-all">
+              <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-lg bg-secondary/20 flex items-center justify-center text-secondary flex-shrink-0">
+                  <span class="material-symbols-outlined text-2xl">auto_awesome</span>
+                </div>
+                <div>
+                  <h4 class="font-display text-sm font-bold text-white">GenAI Powered Data Analytics</h4>
+                  <div class="text-xs font-mono text-secondary">Tata (Forage) Job Simulation</div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-2 border-t border-white/5 text-[11px] font-mono text-on-surface-variant">
+                <span>AI-driven Business Solutions</span>
+                <span class="text-tertiary font-bold">Verified</span>
+              </div>
+            </div>
+
+            <!-- Cert 3 -->
+            <div class="cert-card glass-inset p-4 rounded-xl flex flex-col justify-between gap-3 border border-white/10 hover:border-tertiary/40 transition-all">
+              <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-lg bg-tertiary/20 flex items-center justify-center text-tertiary flex-shrink-0">
+                  <span class="material-symbols-outlined text-2xl">security</span>
+                </div>
+                <div>
+                  <h4 class="font-display text-sm font-bold text-white">Cybersecurity Analyst Job Simulation</h4>
+                  <div class="text-xs font-mono text-tertiary">Tata (Forage) Security Track</div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-2 border-t border-white/5 text-[11px] font-mono text-on-surface-variant">
+                <span>Threat Analysis &amp; IAM Fundamentals</span>
+                <span class="text-tertiary font-bold">Verified</span>
+              </div>
+            </div>
+
+            <!-- Cert 4 -->
+            <div class="cert-card glass-inset p-4 rounded-xl flex flex-col justify-between gap-3 border border-white/10 hover:border-amber-400/40 transition-all">
+              <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-lg bg-amber-400/20 flex items-center justify-center text-amber-300 flex-shrink-0">
+                  <span class="material-symbols-outlined text-2xl">analytics</span>
+                </div>
+                <div>
+                  <h4 class="font-display text-sm font-bold text-white">Data Analytics Program</h4>
+                  <div class="text-xs font-mono text-amber-300">EXL &amp; American India Foundation</div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-2 border-t border-white/5 text-[11px] font-mono text-on-surface-variant">
+                <span>Business Insights &amp; Statistics</span>
+                <span class="text-tertiary font-bold">Certified</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= 7. RESUME VIEWER WINDOW ================= -->
+      <div id="win-resume" class="os-window glass-elevated rounded-2xl shadow-2xl flex flex-col pointer-events-auto" data-window="resume" style="width: 760px; height: 560px; top: 80px; left: 200px; z-index: 16; display: none;">
+        <div class="window-titlebar h-10 px-3.5 flex items-center justify-between border-b border-white/10 cursor-move select-none">
+          <div class="flex items-center gap-2">
+            <div class="window-controls flex items-center gap-1.5">
+              <button class="win-btn win-close bg-[#FF5F56]" onclick="closeWindow('resume')" title="Close"></button>
+              <button class="win-btn win-min bg-[#FFBD2E]" onclick="minimizeWindow('resume')" title="Minimize"></button>
+              <button class="win-btn win-max bg-[#27C93F]" onclick="maximizeWindow('resume')" title="Maximize"></button>
+            </div>
+            <div class="ml-3 flex items-center gap-1.5 text-xs font-mono text-on-surface">
+              <span class="material-symbols-outlined text-sm text-rose-400">description</span>
+              <span class="font-semibold">Ayush_Sharma_Resume.pdf [Viewer]</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button class="px-2 py-0.5 rounded bg-primary text-on-primary font-mono text-xs flex items-center gap-1" onclick="window.print()">
+              <span class="material-symbols-outlined text-xs">print</span> Print / Save PDF
+            </button>
+          </div>
+        </div>
+
+        <div class="window-body flex-1 overflow-y-auto p-6 flex flex-col gap-4 custom-scrollbar text-on-surface bg-surface-container-lowest/80">
+          <!-- Document Rendering Container -->
+          <div class="bg-[#121622] p-8 rounded-xl border border-white/10 shadow-lg text-on-surface flex flex-col gap-5 max-w-2xl mx-auto w-full font-sans">
+            <div class="border-b border-white/10 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h1 class="font-display text-2xl font-bold tracking-tight text-white">AYUSH SHARMA</h1>
+                <p class="text-xs text-primary font-mono">Computer Science Engineering (AI) • AKTU (2022 – 2026)</p>
+              </div>
+              <div class="text-xs font-mono text-on-surface-variant flex flex-col items-start sm:items-end">
+                <span>ayush240304@gmail.com</span>
+                <span>+91-8506943880</span>
+                <span>New Delhi, India</span>
+              </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="flex flex-col gap-1">
+              <h4 class="text-xs font-mono font-bold text-primary tracking-wider uppercase">Executive Summary</h4>
+              <p class="text-xs text-on-surface-variant leading-relaxed">
+                Computer Science Engineering (AI) graduate with hands-on experience building AI-powered applications, backend systems, and machine learning solutions. Skilled in Python, SQL, FastAPI, TensorFlow, and computer vision, with practical experience developing production-style projects involving LLM integration, REST APIs, authentication, and database design.
+              </p>
+            </div>
+
+            <!-- Education -->
+            <div class="flex flex-col gap-1 border-t border-white/5 pt-3">
+              <h4 class="text-xs font-mono font-bold text-secondary tracking-wider uppercase">Education</h4>
+              <div class="flex justify-between text-xs">
+                <span class="font-semibold text-white">Dr. A.P.J. Abdul Kalam Technical University (AKTU)</span>
+                <span class="font-mono text-on-surface-variant">June 2022 – July 2026</span>
+              </div>
+              <div class="text-xs text-primary font-mono">Bachelor of Technology in Computer Science Engineering &amp; Artificial Intelligence</div>
+            </div>
+
+            <!-- Skills List -->
+            <div class="flex flex-col gap-1 border-t border-white/5 pt-3">
+              <h4 class="text-xs font-mono font-bold text-tertiary tracking-wider uppercase">Technical Proficiencies</h4>
+              <div class="text-xs text-on-surface-variant space-y-1">
+                <div><strong class="text-white">Languages:</strong> Python, C, C++, SQL</div>
+                <div><strong class="text-white">ML &amp; AI:</strong> TensorFlow, NumPy, Pandas, Scikit-learn, OpenCV, Neural Networks, CNNs</div>
+                <div><strong class="text-white">Backend &amp; Web:</strong> FastAPI, REST APIs, WebSockets, JWT/OAuth, MySQL, Firebase</div>
+                <div><strong class="text-white">DevOps &amp; Tools:</strong> Docker, Docker Compose, Git, GitHub, VS Code, AI-assisted Dev</div>
+              </div>
+            </div>
+
+            <!-- Projects Shortlist -->
+            <div class="flex flex-col gap-2 border-t border-white/5 pt-3">
+              <h4 class="text-xs font-mono font-bold text-amber-300 tracking-wider uppercase">Key Projects</h4>
+              <div class="text-xs">
+                <div class="font-semibold text-white">TokenBridge – Token-Efficient AI Proxy Middleware</div>
+                <div class="text-[11px] text-on-surface-variant">Multi-provider BYOK LLM router with context compression &amp; Firebase/JWT auth.</div>
+              </div>
+              <div class="text-xs">
+                <div class="font-semibold text-white">MistRoom – Privacy-First Anonymous Chat Application</div>
+                <div class="text-[11px] text-on-surface-variant">WebSockets E2EE messenger with offline P2P mesh networking &amp; zero logs.</div>
+              </div>
+              <div class="text-xs">
+                <div class="font-semibold text-white">FaceTrackAI – Real-Time Face Tracking &amp; Recognition System</div>
+                <div class="text-[11px] text-on-surface-variant">High-accuracy automated attendance tracker using OpenCV and Flask backend.</div>
+              </div>
+            </div>
+
+            <!-- Experience -->
+            <div class="flex flex-col gap-1 border-t border-white/5 pt-3">
+              <h4 class="text-xs font-mono font-bold text-primary tracking-wider uppercase">Internship Experience</h4>
+              <div class="flex justify-between text-xs">
+                <span class="font-semibold text-white">Database Management Intern – Merlin Creations Pvt. Ltd.</span>
+                <span class="font-mono text-on-surface-variant">July 2025 – Aug 2025</span>
+              </div>
+              <p class="text-[11px] text-on-surface-variant">
+                MySQL schema design, query indexing &amp; performance tuning, automated backup/recovery pipelines.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= 8. CONTACT / DISPATCH MODAL WINDOW ================= -->
+      <div id="win-contact" class="os-window glass-elevated rounded-2xl shadow-2xl flex flex-col pointer-events-auto" data-window="contact" style="width: 580px; height: 520px; top: 120px; left: 320px; z-index: 25; display: none;">
+        <div class="window-titlebar h-10 px-3.5 flex items-center justify-between border-b border-white/10 cursor-move select-none">
+          <div class="flex items-center gap-2">
+            <div class="window-controls flex items-center gap-1.5">
+              <button class="win-btn win-close bg-[#FF5F56]" onclick="closeWindow('contact')" title="Close"></button>
+              <button class="win-btn win-min bg-[#FFBD2E]" onclick="minimizeWindow('contact')" title="Minimize"></button>
+              <button class="win-btn win-max bg-[#27C93F]" onclick="maximizeWindow('contact')" title="Maximize"></button>
+            </div>
+            <div class="ml-3 flex items-center gap-1.5 text-xs font-mono text-tertiary">
+              <span class="material-symbols-outlined text-sm">send</span>
+              <span class="font-semibold">Secure_Transmission_Dispatcher.pkg</span>
+            </div>
+          </div>
+          <div class="text-[11px] font-mono text-on-surface-variant">Encrypted Channel</div>
+        </div>
+
+        <div class="window-body flex-1 overflow-y-auto p-6 flex flex-col gap-4 custom-scrollbar text-on-surface">
+          <div>
+            <h3 class="font-display text-lg font-bold text-white">Dispatch Message to Ayush Sharma</h3>
+            <p class="text-xs text-on-surface-variant">Direct routing to <span class="text-primary font-mono">ayush240304@gmail.com</span>.</p>
+          </div>
+
+          <form id="contactDispatchForm" class="flex flex-col gap-3.5">
+            <div class="flex flex-col gap-1">
+              <label class="text-xs font-mono text-on-surface-variant uppercase">Your Name / Organization</label>
+              <input type="text" id="senderName" required placeholder="e.g. Recruiters, Founders, Tech Leads" class="glass-inset px-3 py-2 rounded-lg text-sm text-white placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary border border-white/10" />
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label class="text-xs font-mono text-on-surface-variant uppercase">Contact Email / Handle</label>
+              <input type="email" id="senderEmail" required placeholder="e.g. team@company.com" class="glass-inset px-3 py-2 rounded-lg text-sm text-white placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary border border-white/10" />
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label class="text-xs font-mono text-on-surface-variant uppercase">Opportunity / Message Payload</label>
+              <textarea id="senderMessage" required rows="4" placeholder="Hello Ayush, we reviewed your TokenBridge & MistRoom systems and would love to interview you for a Backend/AI Engineer role..." class="glass-inset px-3 py-2 rounded-lg text-sm text-white placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary resize-none border border-white/10"></textarea>
+            </div>
+
+            <div class="flex items-center justify-between pt-2">
+              <div class="text-xs font-mono text-tertiary flex items-center gap-1" id="dispatchStatus">
+                <span class="material-symbols-outlined text-sm">lock</span> E2EE Channel Ready
+              </div>
+              <div class="flex gap-2">
+                <button type="button" class="btn-ghost" onclick="closeWindow('contact')">Cancel</button>
+                <button type="submit" class="btn-primary" id="transmitBtn">
+                  <span>Transmit Payload</span>
+                  <span class="material-symbols-outlined text-sm">send</span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ================= 9. SETTINGS & CUSTOMIZATION WINDOW ================= -->
+      <div id="win-settings" class="os-window glass-elevated rounded-2xl shadow-2xl flex flex-col pointer-events-auto" data-window="settings" style="width: 650px; height: 480px; top: 130px; left: 270px; z-index: 17; display: none;">
+        <div class="window-titlebar h-10 px-3.5 flex items-center justify-between border-b border-white/10 cursor-move select-none">
+          <div class="flex items-center gap-2">
+            <div class="window-controls flex items-center gap-1.5">
+              <button class="win-btn win-close bg-[#FF5F56]" onclick="closeWindow('settings')" title="Close"></button>
+              <button class="win-btn win-min bg-[#FFBD2E]" onclick="minimizeWindow('settings')" title="Minimize"></button>
+              <button class="win-btn win-max bg-[#27C93F]" onclick="maximizeWindow('settings')" title="Maximize"></button>
+            </div>
+            <div class="ml-3 flex items-center gap-1.5 text-xs font-mono text-on-surface">
+              <span class="material-symbols-outlined text-sm text-primary">settings</span>
+              <span class="font-semibold">System_Preferences.os</span>
+            </div>
+          </div>
+          <div class="text-[11px] font-mono text-on-surface-variant">Preferences</div>
+        </div>
+
+        <div class="window-body flex-1 overflow-y-auto p-6 flex flex-col gap-5 custom-scrollbar text-on-surface">
+          <div>
+            <h3 class="font-display text-lg font-bold text-white">Spatial Aesthetics &amp; Shader Controls</h3>
+            <p class="text-xs text-on-surface-variant">Adjust optical refraction, audio feedback, and procedural themes.</p>
+          </div>
+
+          <!-- Setting 1: Theme Mode -->
+          <div class="glass-inset p-4 rounded-xl flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-primary text-xl">palette</span>
+              <div>
+                <div class="text-sm font-semibold text-white">Interface Appearance</div>
+                <div class="text-xs text-on-surface-variant">Switch between Deep Obsidian Dark and Crystalline Ice Light Mode.</div>
+              </div>
+            </div>
+            <div class="flex gap-1.5">
+              <button class="px-3 py-1 rounded-lg text-xs font-mono bg-primary text-on-primary font-semibold" onclick="setAppTheme('dark')">Dark Glass</button>
+              <button class="px-3 py-1 rounded-lg text-xs font-mono glass-base hover:bg-white/10" onclick="setAppTheme('light')">Light Glass</button>
+            </div>
+          </div>
+
+          <!-- Setting 2: Shader Speed -->
+          <div class="glass-inset p-4 rounded-xl flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-secondary text-xl">waves</span>
+              <div>
+                <div class="text-sm font-semibold text-white">WebGL Fluid Dynamics</div>
+                <div class="text-xs text-on-surface-variant">Interactive procedural shader speed.</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <button class="px-2.5 py-1 rounded-md text-xs font-mono glass-base" onclick="setShaderSpeed(0.1)">Subtle</button>
+              <button class="px-2.5 py-1 rounded-md text-xs font-mono bg-secondary/30 text-secondary border border-secondary/40" onclick="setShaderSpeed(0.28)">Default</button>
+              <button class="px-2.5 py-1 rounded-md text-xs font-mono glass-base" onclick="setShaderSpeed(0.65)">Dynamic</button>
+            </div>
+          </div>
+
+          <!-- Setting 3: Audio Effects -->
+          <div class="glass-inset p-4 rounded-xl flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-tertiary text-xl">volume_up</span>
+              <div>
+                <div class="text-sm font-semibold text-white">Spatial Sound Feedback</div>
+                <div class="text-xs text-on-surface-variant">Subtle synthetic audio feedback on click &amp; window movements.</div>
+              </div>
+            </div>
+            <input type="checkbox" id="soundToggleCheckbox" class="w-5 h-5 accent-primary cursor-pointer" checked />
+          </div>
+
+          <!-- About Aura OS -->
+          <div class="p-4 rounded-xl bg-surface-container/60 border border-white/5 text-xs text-on-surface-variant flex flex-col gap-1">
+            <div class="font-mono text-white font-semibold">Aura OS • Spatial Web Experience</div>
+            <div>Built by Ayush Sharma with Vanilla HTML5, High-Performance Canvas WebGL Shaders, and VisionOS-inspired optical refraction.</div>
+            <div class="text-[10px] opacity-60 mt-1">Host-optimized for Vercel Free Edge Deployment.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ================= FLOATING DOCK (VISIONOS / MACOS STYLE) ================= -->
+  <footer id="floatingDockWrap" class="fixed bottom-3 left-0 right-0 z-40 flex justify-center pointer-events-none select-none">
+    <div id="floatingDock" class="pointer-events-auto glass-dock px-3 py-2 rounded-2xl flex items-center gap-2.5 shadow-2xl border border-white/15 relative">
+      
+      <!-- Dock Item 1: About -->
+      <button class="dock-item group" onclick="toggleWindow('about')" data-app="about" title="Ayush Sharma (Profile)">
+        <div class="dock-icon">
+          <span class="material-symbols-outlined text-primary text-2xl group-hover:scale-110 transition-transform">person</span>
+        </div>
+        <span class="dock-label">Bio</span>
+        <div class="dock-dot" id="dot-about"></div>
+      </button>
+
+      <!-- Dock Item 2: Projects -->
+      <button class="dock-item group" onclick="toggleWindow('projects')" data-app="projects" title="Production Projects">
+        <div class="dock-icon">
+          <span class="material-symbols-outlined text-secondary text-2xl group-hover:scale-110 transition-transform">deployed_code</span>
+        </div>
+        <span class="dock-label">Projects</span>
+        <div class="dock-dot" id="dot-projects"></div>
+      </button>
+
+      <!-- Dock Item 3: Skills -->
+      <button class="dock-item group" onclick="toggleWindow('skills')" data-app="skills" title="Technical Skills Matrix">
+        <div class="dock-icon">
+          <span class="material-symbols-outlined text-amber-400 text-2xl group-hover:scale-110 transition-transform">cpu</span>
+        </div>
+        <span class="dock-label">Skills</span>
+        <div class="dock-dot" id="dot-skills"></div>
+      </button>
+
+      <!-- Dock Item 4: Experience -->
+      <button class="dock-item group" onclick="toggleWindow('experience')" data-app="experience" title="Work Experience">
+        <div class="dock-icon">
+          <span class="material-symbols-outlined text-emerald-400 text-2xl group-hover:scale-110 transition-transform">work</span>
+        </div>
+        <span class="dock-label">Experience</span>
+        <div class="dock-dot" id="dot-experience"></div>
+      </button>
+
+      <!-- Dock Item 5: Certifications -->
+      <button class="dock-item group" onclick="toggleWindow('certifications')" data-app="certifications" title="Certifications & Accreditations">
+        <div class="dock-icon">
+          <span class="material-symbols-outlined text-cyan-400 text-2xl group-hover:scale-110 transition-transform">verified</span>
+        </div>
+        <span class="dock-label">Certs</span>
+        <div class="dock-dot" id="dot-certifications"></div>
+      </button>
+
+      <!-- Dock Item 6: Terminal -->
+      <button class="dock-item group" onclick="toggleWindow('terminal')" data-app="terminal" title="Interactive Terminal">
+        <div class="dock-icon">
+          <span class="material-symbols-outlined text-tertiary text-2xl group-hover:scale-110 transition-transform">terminal</span>
+        </div>
+        <span class="dock-label">Terminal</span>
+        <div class="dock-dot" id="dot-terminal"></div>
+      </button>
+
+      <!-- Dock Item 7: Resume -->
+      <button class="dock-item group" onclick="toggleWindow('resume')" data-app="resume" title="Resume Document">
+        <div class="dock-icon">
+          <span class="material-symbols-outlined text-rose-400 text-2xl group-hover:scale-110 transition-transform">description</span>
+        </div>
+        <span class="dock-label">Resume</span>
+        <div class="dock-dot" id="dot-resume"></div>
+      </button>
+
+      <div class="h-8 w-[1px] bg-white/15 my-auto hidden sm:block"></div>
+
+      <!-- Dock Item 8: Contact -->
+      <button class="dock-item group" onclick="toggleWindow('contact')" data-app="contact" title="Direct Dispatch / Hire">
+        <div class="dock-icon bg-tertiary/10 border border-tertiary/30">
+          <span class="material-symbols-outlined text-tertiary text-2xl group-hover:scale-110 transition-transform">mail</span>
+        </div>
+        <span class="dock-label">Dispatch</span>
+        <div class="dock-dot" id="dot-contact"></div>
+      </button>
+
+      <!-- Dock Item 9: GitHub External -->
+      <a href="https://github.com/ayushsharma2403" target="_blank" rel="noopener noreferrer" class="dock-item group" title="GitHub: @ayushsharma2403">
+        <div class="dock-icon">
+          <svg class="w-5 h-5 fill-current text-white group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+        </div>
+        <span class="dock-label">GitHub</span>
+      </a>
+
+      <!-- Dock Item 10: LinkedIn External -->
+      <a href="https://www.linkedin.com/in/ayush-sharma-47b60a370/" target="_blank" rel="noopener noreferrer" class="dock-item group" title="LinkedIn: Ayush Sharma">
+        <div class="dock-icon">
+          <svg class="w-5 h-5 fill-current text-[#0A84FF] group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+          </svg>
+        </div>
+        <span class="dock-label">LinkedIn</span>
+      </a>
+
+    </div>
+  </footer>
+
+  <!-- Notification Banner Toast -->
+  <div id="toastNotification" class="fixed top-12 right-6 z-50 glass-elevated border border-primary/40 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 transform translate-x-96 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center text-primary">
+      <span class="material-symbols-outlined text-lg" id="toastIcon">info</span>
+    </div>
+    <div class="flex flex-col">
+      <span class="text-xs font-bold text-white" id="toastTitle">System Notification</span>
+      <span class="text-[11px] text-on-surface-variant" id="toastDesc">Action executed successfully.</span>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
