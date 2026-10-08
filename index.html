@@ -303,6 +303,10 @@
               <button class="btn-secondary" onclick="openWindow('resume')">
                 <span class="material-symbols-outlined text-sm">description</span> View Resume
               </button>
+              <a href="Ayush_Sharma_Resume.pdf" download="Ayush_Sharma_Resume.pdf" class="btn-secondary group hover:border-rose-400/50" title="Download Ayush_Sharma_Resume.pdf">
+                <span class="material-symbols-outlined text-sm text-rose-400 group-hover:scale-110 transition-transform">download</span>
+                <span class="text-xs font-mono">PDF</span>
+              </a>
             </div>
             <div class="flex items-center gap-2">
               <a href="https://github.com/ayushsharma2403" target="_blank" rel="noopener noreferrer" class="btn-secondary px-3 py-2 group hover:border-primary/50 transition-all" title="Follow on GitHub (@ayushsharma2403)">
@@ -1131,8 +1135,11 @@
           <div class="flex items-center gap-2">
             <span class="material-symbols-outlined text-sm text-rose-400">description</span>
             <span class="font-semibold text-xs font-mono text-on-surface">Ayush_Sharma_Resume.pdf</span>
-            <button class="ml-2 px-2 py-0.5 rounded bg-primary text-on-primary font-mono text-[10px] flex items-center gap-1" onclick="window.print()">
-              <span class="material-symbols-outlined text-[12px]">print</span> Print / PDF
+            <a href="Ayush_Sharma_Resume.pdf" download="Ayush_Sharma_Resume.pdf" class="ml-2 px-2.5 py-1 rounded bg-primary text-white font-mono text-[11px] font-semibold flex items-center gap-1 shadow-md hover:bg-sky-400 transition-colors" title="Download exact Ayush_Sharma_Resume.pdf file">
+              <span class="material-symbols-outlined text-[14px]">download</span> Download PDF
+            </a>
+            <button class="px-2 py-1 rounded bg-white/10 text-on-surface font-mono text-[10px] flex items-center gap-1 hover:bg-white/20 transition-colors" onclick="window.print()" title="Print or Save As PDF">
+              <span class="material-symbols-outlined text-[12px]">print</span> Print
             </button>
           </div>
 
@@ -1151,6 +1158,27 @@
         </div>
 
         <div class="window-body flex-1 overflow-y-auto p-6 flex flex-col gap-4 custom-scrollbar text-on-surface bg-surface-container-lowest/80">
+          <!-- Download Bar Header -->
+          <div class="max-w-2xl mx-auto w-full glass-inset p-3 rounded-xl border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center border border-rose-500/30">
+                <span class="material-symbols-outlined text-lg">picture_as_pdf</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-xs font-bold text-white font-mono">Ayush_Sharma_Resume.pdf</span>
+                <span class="text-[10px] text-on-surface-variant font-mono">Official PDF Document • 302 KB</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <a href="Ayush_Sharma_Resume.pdf" download="Ayush_Sharma_Resume.pdf" class="btn-primary py-1.5 px-3 text-xs flex items-center gap-1.5 font-mono shadow-md" title="Download exact file: Ayush_Sharma_Resume.pdf">
+                <span class="material-symbols-outlined text-sm">download</span> Download PDF
+              </a>
+              <a href="Ayush_Sharma_Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-secondary py-1.5 px-3 text-xs flex items-center gap-1 font-mono" title="Open PDF in new tab">
+                <span class="material-symbols-outlined text-sm">open_in_new</span> Open File
+              </a>
+            </div>
+          </div>
+
           <!-- Document Rendering Container -->
           <div class="bg-[#121622] p-8 rounded-xl border border-white/10 shadow-lg text-on-surface flex flex-col gap-5 max-w-2xl mx-auto w-full font-sans">
             <div class="border-b border-white/10 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
