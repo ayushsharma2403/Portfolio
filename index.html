@@ -155,7 +155,20 @@
 
       <div class="desktop-shortcut" onclick="openWindow('skills')">
         <div class="icon-bubble glass-base">
-          <span class="material-symbols-outlined text-2xl text-amber-400">cpu</span>
+          <svg class="w-6 h-6 text-amber-400 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Microchip core box -->
+            <rect x="4" y="4" width="16" height="16" rx="3"></rect>
+            <!-- Inner silicon die -->
+            <rect x="8.5" y="8.5" width="7" height="7" rx="1.5" fill="currentColor" fill-opacity="0.15"></rect>
+            <!-- Top bus pins -->
+            <path d="M9 1v3M12 1v3M15 1v3"></path>
+            <!-- Bottom bus pins -->
+            <path d="M9 20v3M12 20v3M15 20v3"></path>
+            <!-- Left bus pins -->
+            <path d="M1 9h3M1 12h3M1 15h3"></path>
+            <!-- Right bus pins -->
+            <path d="M20 9h3M20 12h3M20 15h3"></path>
+          </svg>
         </div>
         <span class="shortcut-label">Tech Stack</span>
       </div>
@@ -534,7 +547,11 @@
         <div class="window-titlebar h-10 px-3.5 flex items-center justify-between border-b border-white/10 cursor-move select-none">
           <!-- Left: Window Title & Meta -->
           <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined text-sm text-amber-400">cpu</span>
+            <svg class="w-4 h-4 text-amber-400 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="4" width="16" height="16" rx="3"></rect>
+              <rect x="9" y="9" width="6" height="6" rx="1" fill="currentColor" fill-opacity="0.2"></rect>
+              <path d="M9 1v3M12 1v3M15 1v3M9 20v3M12 20v3M15 20v3M1 9h3M1 12h3M1 15h3M20 9h3M20 12h3M20 15h3"></path>
+            </svg>
             <span class="font-semibold text-xs font-mono text-on-surface">Technical_Stack_Matrix.cfg</span>
             <span class="ml-2 text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-400/10 text-amber-300 border border-amber-400/20">Verified</span>
           </div>
@@ -1138,7 +1155,20 @@
       <!-- Dock Item 3: Skills -->
       <button class="dock-item group" onclick="toggleWindow('skills')" data-app="skills" title="Technical Skills Matrix">
         <div class="dock-icon">
-          <span class="material-symbols-outlined text-amber-400 text-2xl group-hover:scale-110 transition-transform">cpu</span>
+          <svg class="w-6 h-6 text-amber-400 fill-none stroke-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Microchip core box -->
+            <rect x="4" y="4" width="16" height="16" rx="3"></rect>
+            <!-- Inner silicon die -->
+            <rect x="8.5" y="8.5" width="7" height="7" rx="1.5" fill="currentColor" fill-opacity="0.15"></rect>
+            <!-- Top bus pins -->
+            <path d="M9 1v3M12 1v3M15 1v3"></path>
+            <!-- Bottom bus pins -->
+            <path d="M9 20v3M12 20v3M15 20v3"></path>
+            <!-- Left bus pins -->
+            <path d="M1 9h3M1 12h3M1 15h3"></path>
+            <!-- Right bus pins -->
+            <path d="M20 9h3M20 12h3M20 15h3"></path>
+          </svg>
         </div>
         <span class="dock-label">Skills</span>
         <div class="dock-dot" id="dot-skills"></div>
