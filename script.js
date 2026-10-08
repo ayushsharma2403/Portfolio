@@ -79,6 +79,29 @@
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
       osc.start(now);
       osc.stop(now + 0.18);
+    } else if (type === 'success') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(520, now);
+      osc.frequency.exponentialRampToValueAtTime(1040, now + 0.12);
+      gain.gain.setValueAtTime(0.07, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+      osc.start(now);
+      osc.stop(now + 0.14);
+    } else if (type === 'error') {
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(280, now);
+      osc.frequency.exponentialRampToValueAtTime(180, now + 0.1);
+      gain.gain.setValueAtTime(0.06, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+      osc.start(now);
+      osc.stop(now + 0.12);
+    } else if (type === 'beep') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(660, now);
+      gain.gain.setValueAtTime(0.05, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+      osc.start(now);
+      osc.stop(now + 0.06);
     }
   }
 
@@ -765,7 +788,9 @@ Focus       : AI-powered backends, Multi-provider LLM routing, WebSockets E2EE &
     playSound('click');
     const container = document.getElementById('passcodeContainer');
     if (container) {
-      container.classList.toggle('hidden');
+      // Use style.display so flex layout is preserved (Tailwind 'hidden' would revert to block)
+      const isHidden = container.style.display === 'none' || container.style.display === '';
+      container.style.display = isHidden ? 'flex' : 'none';
     }
   };
 
