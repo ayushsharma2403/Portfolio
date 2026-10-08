@@ -46,24 +46,360 @@ body.theme-light {
   --color-surface-bright: #ffffff;
   --color-surface-container-lowest: #ffffff;
   --color-surface-container-low: #f8fafc;
-  --color-surface-container: #f1f5f9;
-  --color-surface-container-high: #e2e8f0;
-  --color-surface-container-highest: #cbd5e1;
+  --color-surface-container: #ffffff;
+  --color-surface-container-high: #f1f5f9;
+  --color-surface-container-highest: #e2e8f0;
   --color-on-surface: #0f172a;
-  --color-on-surface-variant: #475569;
+  --color-on-surface-variant: #334155;
   --color-primary: #0284c7;
-  --color-primary-fixed: #0284c7;
-  --color-secondary: #6366f1;
-  --color-tertiary: #059669;
-  --color-outline: rgba(15, 23, 42, 0.1);
-  --color-outline-bright: rgba(15, 23, 42, 0.25);
+  --color-primary-fixed: #0369a1;
+  --color-secondary: #4f46e5;
+  --color-tertiary: #15803d;
+  --color-outline: rgba(15, 23, 42, 0.15);
+  --color-outline-bright: rgba(15, 23, 42, 0.3);
 
-  --glass-base: rgba(255, 255, 255, 0.68);
-  --glass-elevated: rgba(255, 255, 255, 0.88);
-  --glass-dock: rgba(255, 255, 255, 0.82);
-  --specular-rim: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.3) 100%);
-  --specular-top-border: rgba(255, 255, 255, 0.85);
+  --glass-base: rgba(255, 255, 255, 0.85);
+  --glass-elevated: rgba(255, 255, 255, 0.94);
+  --glass-dock: rgba(255, 255, 255, 0.92);
+  --specular-rim: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.6) 100%);
+  --specular-top-border: rgba(2, 132, 199, 0.5);
   --window-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.18), 0 0 20px 2px rgba(2, 132, 199, 0.1);
+}
+
+/* Specific Light Theme High-Contrast Typography & Container Enforcements */
+html.theme-light .text-white {
+  color: #0f172a !important;
+}
+
+html.theme-light .text-on-surface {
+  color: #0f172a !important;
+}
+
+html.theme-light .text-on-surface-variant {
+  color: #334155 !important;
+}
+
+html.theme-light .os-window {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: 1px solid rgba(148, 163, 184, 0.5) !important;
+  color: #0f172a !important;
+  box-shadow: 0 24px 60px -12px rgba(15, 23, 42, 0.15), 0 0 25px 2px rgba(2, 132, 199, 0.12) !important;
+}
+
+html.theme-light .os-window.active-window {
+  box-shadow: 0 30px 75px -12px rgba(15, 23, 42, 0.22), 0 0 30px 4px rgba(2, 132, 199, 0.2) !important;
+  border-color: rgba(2, 132, 199, 0.6) !important;
+}
+
+html.theme-light .window-titlebar {
+  background: rgba(248, 250, 252, 0.95) !important;
+  border-bottom: 1px solid rgba(203, 213, 225, 0.8) !important;
+  color: #0f172a !important;
+}
+
+html.theme-light .window-body {
+  background: rgba(255, 255, 255, 0.88) !important;
+  color: #0f172a !important;
+}
+
+html.theme-light .glass-inset {
+  background: rgba(241, 245, 249, 0.92) !important;
+  border: 1px solid rgba(203, 213, 225, 0.8) !important;
+}
+
+html.theme-light .bg-surface-container\/60 {
+  background-color: rgba(248, 250, 252, 0.95) !important;
+  border: 1px solid rgba(203, 213, 225, 0.8) !important;
+  color: #0f172a !important;
+}
+
+html.theme-light .border-white\/10,
+html.theme-light .border-white\/5 {
+  border-color: rgba(203, 213, 225, 0.8) !important;
+}
+
+html.theme-light .bg-white\/5 {
+  background-color: rgba(241, 245, 249, 0.8) !important;
+}
+
+html.theme-light .bg-surface-container {
+  background-color: rgba(248, 250, 252, 0.95) !important;
+  border: 1px solid rgba(203, 213, 225, 0.8) !important;
+}
+
+html.theme-light .bg-surface-container-lowest {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(203, 213, 225, 0.8) !important;
+}
+
+/* Light Theme Avatar container */
+html.theme-light .w-28.h-28.rounded-2xl {
+  box-shadow: 0 10px 25px rgba(2, 132, 199, 0.2) !important;
+  border-color: #0284c7 !important;
+}
+html.theme-light .w-28.h-28.rounded-2xl .text-white {
+  color: #ffffff !important; /* Keep AS monogram crisp white on blue/navy gradient */
+}
+
+html.theme-light .badge-pill.bg-primary\/15,
+html.theme-light .badge-pill.bg-primary\/20 {
+  background-color: rgba(2, 132, 199, 0.15) !important;
+  color: #0369a1 !important;
+  border-color: rgba(2, 132, 199, 0.4) !important;
+}
+
+html.theme-light .badge-pill.bg-secondary\/15,
+html.theme-light .badge-pill.bg-secondary\/20 {
+  background-color: rgba(79, 70, 229, 0.15) !important;
+  color: #4338ca !important;
+  border-color: rgba(79, 70, 229, 0.4) !important;
+}
+
+html.theme-light .badge-pill.bg-tertiary\/15,
+html.theme-light .badge-pill.bg-tertiary\/20 {
+  background-color: rgba(21, 128, 61, 0.15) !important;
+  color: #15803d !important;
+  border-color: rgba(21, 128, 61, 0.4) !important;
+}
+
+html.theme-light .tech-chip {
+  background: rgba(241, 245, 249, 0.95) !important;
+  border: 1px solid rgba(203, 213, 225, 0.9) !important;
+  color: #1e293b !important;
+  font-weight: 500;
+}
+
+html.theme-light .tech-chip:hover {
+  background: rgba(2, 132, 199, 0.15) !important;
+  color: #0369a1 !important;
+  border-color: #0284c7 !important;
+}
+
+html.theme-light .skill-pill {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid rgba(203, 213, 225, 0.8) !important;
+}
+
+html.theme-light .skill-pill:hover {
+  background: #f8fafc !important;
+  border-color: #0284c7 !important;
+}
+
+html.theme-light .btn-secondary {
+  background: rgba(241, 245, 249, 0.9) !important;
+  border: 1px solid rgba(203, 213, 225, 0.8) !important;
+  color: #0f172a !important;
+}
+
+html.theme-light .btn-secondary:hover {
+  background: #ffffff !important;
+  border-color: #0284c7 !important;
+  color: #0284c7 !important;
+}
+
+html.theme-light .btn-ghost {
+  color: #334155 !important;
+}
+
+html.theme-light .btn-ghost:hover {
+  background: rgba(241, 245, 249, 0.9) !important;
+  color: #0284c7 !important;
+}
+
+html.theme-light .stat-card {
+  background: rgba(248, 250, 252, 0.9) !important;
+  border: 1px solid rgba(203, 213, 225, 0.8) !important;
+}
+
+html.theme-light .stat-card:hover {
+  background: #ffffff !important;
+  border-color: #0284c7 !important;
+}
+
+html.theme-light .stat-value.text-primary {
+  color: #0284c7 !important;
+}
+html.theme-light .stat-value.text-secondary {
+  color: #4f46e5 !important;
+}
+html.theme-light .stat-value.text-tertiary {
+  color: #15803d !important;
+}
+
+/* Light Theme Clock & Telemetry Widget Fix */
+html.theme-light #desktopWidgetClock {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: 1px solid rgba(203, 213, 225, 0.8) !important;
+  box-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.15) !important;
+}
+
+html.theme-light #widgetLargeClock {
+  color: #0f172a !important;
+  text-shadow: none !important;
+  font-weight: 300 !important;
+}
+
+html.theme-light #widgetDateString {
+  color: #334155 !important;
+}
+
+html.theme-light #desktopWidgetClock .bg-surface-container\/60 {
+  background: #ffffff !important;
+  border: 1px solid rgba(203, 213, 225, 0.9) !important;
+}
+
+html.theme-light #desktopWidgetClock .text-\[10px\].opacity-70 {
+  color: #64748b !important;
+  opacity: 1 !important;
+}
+
+html.theme-light #desktopWidgetClock .text-tertiary {
+  color: #15803d !important;
+}
+
+html.theme-light #desktopWidgetClock .text-primary {
+  color: #0284c7 !important;
+}
+
+html.theme-light .shortcut-label {
+  color: #0f172a !important;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8) !important;
+  font-weight: 600 !important;
+}
+
+html.theme-light .icon-bubble {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border: 1px solid rgba(203, 213, 225, 0.8) !important;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12) !important;
+}
+
+/* Light Theme Dock */
+html.theme-light .glass-dock {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: 1px solid rgba(203, 213, 225, 0.8) !important;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.15), inset 0 1px 1px rgba(255, 255, 255, 1) !important;
+}
+
+html.theme-light .dock-icon {
+  background: rgba(241, 245, 249, 0.95) !important;
+  border: 1px solid rgba(203, 213, 225, 0.8) !important;
+}
+
+html.theme-light .dock-item:hover .dock-icon {
+  background: #ffffff !important;
+  border-color: #0284c7 !important;
+}
+
+html.theme-light .dock-label {
+  background: rgba(15, 23, 42, 0.9) !important;
+  color: #ffffff !important;
+}
+
+/* Light Theme Menu Bar */
+html.theme-light #systemMenuBar {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-bottom: 1px solid rgba(203, 213, 225, 0.7) !important;
+}
+
+html.theme-light .menu-tab-btn {
+  color: #334155 !important;
+}
+
+html.theme-light .menu-tab-btn:hover {
+  background: rgba(241, 245, 249, 0.9) !important;
+  color: #0284c7 !important;
+}
+
+/* Light Theme Projects & Detailed Cards */
+html.theme-light .project-card {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid rgba(203, 213, 225, 0.8) !important;
+  color: #0f172a !important;
+}
+
+html.theme-light .project-card:hover {
+  background: #ffffff !important;
+  border-color: #0284c7 !important;
+}
+
+html.theme-light .project-card h3 {
+  color: #0f172a !important;
+}
+
+html.theme-light .project-card p,
+html.theme-light .project-card ul,
+html.theme-light .project-card li {
+  color: #334155 !important;
+}
+
+html.theme-light .cert-card {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: 1px solid rgba(203, 213, 225, 0.8) !important;
+  color: #0f172a !important;
+}
+
+html.theme-light .cert-card h4 {
+  color: #0f172a !important;
+}
+
+/* Light Theme Terminal Window */
+html.theme-light #win-terminal .window-titlebar {
+  background: #1e293b !important;
+  color: #f8fafc !important;
+}
+
+html.theme-light .terminal-body {
+  background: #090d16 !important;
+  color: #34d399 !important;
+}
+
+/* Light Theme Resume Viewer Inside Box */
+html.theme-light #win-resume .bg-\[\#121622\] {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid rgba(203, 213, 225, 0.9) !important;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08) !important;
+}
+
+html.theme-light #win-resume h1,
+html.theme-light #win-resume h2,
+html.theme-light #win-resume h3,
+html.theme-light #win-resume h4,
+html.theme-light #win-resume strong {
+  color: #0f172a !important;
+}
+
+html.theme-light #win-resume p,
+html.theme-light #win-resume div,
+html.theme-light #win-resume span {
+  color: #334155;
+}
+html.theme-light #win-resume .text-primary {
+  color: #0284c7 !important;
+}
+html.theme-light #win-resume .text-secondary {
+  color: #4f46e5 !important;
+}
+html.theme-light #win-resume .text-tertiary {
+  color: #15803d !important;
+}
+
+/* Form inputs in light mode */
+html.theme-light input,
+html.theme-light textarea {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid rgba(203, 213, 225, 0.9) !important;
+}
+html.theme-light input::placeholder,
+html.theme-light textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+html.theme-light #topBarClock {
+  background: rgba(241, 245, 249, 0.8) !important;
+  color: #0f172a !important;
+  border: 1px solid rgba(203, 213, 225, 0.6) !important;
 }
 
 /* Base resets */
