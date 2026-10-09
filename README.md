@@ -1,11 +1,13 @@
 # Hi there, I'm Ayush Sharma 👋
 
+[![Website](https://img.shields.io/badge/Live_Portfolio-Vercel-000000?style=flat-square&logo=vercel)](https://portfolio-rho-one-nzmmif890a.vercel.app/)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Ayush_Sharma-0A66C2?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/ayush-sharma-47b60a370)
 [![GitHub](https://img.shields.io/badge/GitHub-ayushsharma2403-181717?style=flat-square&logo=github)](https://github.com/ayushsharma2403)
 [![Email](https://img.shields.io/badge/Email-ayush240304%40gmail.com-EA4335?style=flat-square&logo=gmail)](mailto:ayush240304@gmail.com)
 [![Location](https://img.shields.io/badge/Location-New_Delhi%2C_India-informational?style=flat-square&logo=google-maps)](https://maps.google.com/?q=New+Delhi)
 
-> **Computer Science & Artificial Intelligence Engineer** passionate about building AI-powered applications, scalable backend systems, and machine learning solutions.
+> **Computer Science & Artificial Intelligence Engineer** passionate about building AI-powered applications, scalable backend systems, and machine learning solutions.  
+> 🌐 **Live Portfolio Website**: [portfolio-rho-one-nzmmif890a.vercel.app](https://portfolio-rho-one-nzmmif890a.vercel.app/)
 
 ---
 
@@ -85,6 +87,7 @@ Computer Science Engineering (AI) graduate with hands-on experience building AI-
 
 ## 📬 Connect with Me
 
+- 🌐 **Portfolio Website**: [portfolio-rho-one-nzmmif890a.vercel.app](https://portfolio-rho-one-nzmmif890a.vercel.app/)
 - 💼 **LinkedIn**: [linkedin.com/in/ayush-sharma-47b60a370](https://www.linkedin.com/in/ayush-sharma-47b60a370/)
 - 🐙 **GitHub**: [github.com/ayushsharma2403](https://github.com/ayushsharma2403)
 - 📧 **Email**: [ayush240304@gmail.com](mailto:ayush240304@gmail.com)
